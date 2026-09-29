@@ -51,7 +51,11 @@ async def _models(args) -> None:
         p = m.get("pricing") or {}
         return str(p.get("prompt", "1")) in ("0", "0.0") and str(p.get("completion", "1")) in ("0", "0.0")
 
-    rows = [m for m in models if is_free(m)] if args.free else models
+    def writes_text(m) -> bool:  # skip music/image generators such as Lyria
+        out = (m.get("architecture") or {}).get("output_modalities")
+        return out is None or "text" in out
+
+    rows = [m for m in models if writes_text(m) and (is_free(m) or not args.free)]
     rows.sort(key=lambda m: ("response_format" not in (m.get("supported_parameters") or []), m.get("id", "")))
     print(f"{'model id':60} {'context':>9}  json")
     for m in rows:
