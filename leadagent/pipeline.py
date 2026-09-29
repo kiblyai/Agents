@@ -20,7 +20,7 @@ from .research import research_company
 from .writer import write_first_line
 
 # Bump when research or writing logic changes, so cached results from older logic are redone.
-CACHE_VERSION = "2"
+CACHE_VERSION = "3"
 
 
 def cache_key(icp: ICP) -> str:
@@ -148,6 +148,7 @@ def summary(report: RunReport, usage, total_input: int) -> dict:
         "llm_requests": usage.requests,
         "llm_repairs": usage.repairs,
         "llm_retries": usage.retries,
+        "llm_failed_attempts": usage.failed_attempts,
         "prompt_tokens": usage.prompt_tokens,
         "completion_tokens": usage.completion_tokens,
         "cost_usd": round(usage.cost_usd, 4),

@@ -16,6 +16,8 @@ Rules:
 - Judge every profile criterion (industry, company size, funding stage, geography, exclusions) as "met", "not_met" or "unknown", with short evidence. Use "not_met" when the evidence points against it, e.g. a Series C or $100M+ raised when the profile wants Seed-Series A, hundreds of employees or 50+ open roles when it wants a small company, or a consumer product when it wants B2B. Websites rarely state headcount: say "unknown" rather than guessing.
 - Every signal must quote or closely paraphrase the page text and give that page's exact URL as source_url. Give the date as YYYY-MM when the page shows one.
 - A signal dated more than 12 months before today is history, not a reason to reach out now.
+- Prefer signals that match the profile's buying signals. Routine feature releases, changelog entries and integrations are weak signals: label them "product_update", and use "launch" only for a genuinely new product or market.
+- fits_icp and score must agree: fits_icp is false whenever the score is below 6.
 - Score 0-10: 8-10 every known criterion met and a current signal; 5-7 plausible fit; 0-4 any criterion not met, excluded, or no evidence of fit.
 - why_now_index is the 0-based position in your signals list of the strongest current signal, or null.
 - Reply with one JSON object only, no other text."""
@@ -27,7 +29,7 @@ SCHEMA_HINT = """{
   "fits_icp": <true|false>,
   "score": <0-10>,
   "score_reasons": ["<short reason>"],
-  "signals": [{"type": "<hiring|funding|launch|expansion|leadership|other>", "evidence": "<quote or close paraphrase>", "source_url": "<exact page URL>", "date": "<YYYY-MM or null>"}],
+  "signals": [{"type": "<hiring|funding|leadership|expansion|launch|product_update|other>", "evidence": "<quote or close paraphrase>", "source_url": "<exact page URL>", "date": "<YYYY-MM or null>"}],
   "why_now_index": <index into signals or null>,
   "disqualifiers": ["<anything matching the exclude list>"]
 }"""
@@ -117,8 +119,13 @@ def verify(research: CompanyResearch, pages: list[Page], web: bool = False) -> C
     return research
 
 
-def finalize(research: CompanyResearch, pages: list[Page], today: date, web: bool = False) -> CompanyResearch:
+DEFAULT_PRIORITY = ["hiring", "funding", "leadership", "expansion", "launch", "product_update", "other"]
+
+
+def finalize(research: CompanyResearch, pages: list[Page], today: date, web: bool = False,
+             priority: list[str] | None = None) -> CompanyResearch:
     """Apply the checks a model can't be trusted with: citations, dates, hard criteria, and the why-now."""
+    priority = [p.lower() for p in (priority or DEFAULT_PRIORITY)]
     idx = research.why_now_index
     chosen = research.signals[idx] if idx is not None and 0 <= idx < len(research.signals) else None
     research = verify(research, pages, web=web)
@@ -131,9 +138,18 @@ def finalize(research: CompanyResearch, pages: list[Page], today: date, web: boo
         if research.score > 4:
             research.score = 4
         research.score_reasons.append("capped at 4: " + "; ".join(f"{c.name} not met ({c.evidence})" for c in failed))
+    elif not research.fits_icp and research.score > 4:
+        # verdict and score disagree (e.g. "not a fit" but 9/10): trust the verdict, the cautious reading
+        research.score = 4
+        research.score_reasons.append("capped at 4: judged not a fit")
 
     usable = [s for s in research.signals if s.verified and not s.stale]
-    best = chosen if chosen in usable else (usable[0] if usable else None)
+
+    def rank(sig):
+        t = sig.type.strip().lower()
+        return (priority.index(t) if t in priority else len(priority), 0 if sig is chosen else 1)
+
+    best = min(usable, key=rank) if usable else None
     research.why_now = ""
     if best is not None:
         text = best.evidence.strip()
@@ -149,4 +165,4 @@ async def research_company(llm, icp: ICP, domain: str, pages: list[Page], *, web
     prompt = build_prompt(icp, domain, pages, web=bool(web_results))
     result = await llm.complete_json(system=system_prompt(today), user=prompt, schema=CompanyResearch,
                                      web_results=web_results, max_tokens=4000)
-    return finalize(result, pages, today, web=bool(web_results))
+    return finalize(result, pages, today, web=bool(web_results), priority=icp.signal_priority)

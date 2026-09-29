@@ -88,7 +88,8 @@ async def _run(args) -> None:
     (out / "companies.jsonl").write_text("".join(r.model_dump_json() + "\n" for r in report.results))
     stats = summary(report, llm.usage, len(companies))
     dump_json(out / "run_summary.json", stats)
-    print(f"\nDone: {stats['status_counts']}; {len(leads)} lead rows; {stats['llm_requests']} model requests; "
+    failed = f" (+{stats['llm_failed_attempts']} rejected as busy/failed)" if stats["llm_failed_attempts"] else ""
+    print(f"\nDone: {stats['status_counts']}; {len(leads)} lead rows; {stats['llm_requests']} model requests{failed}; "
           f"${stats['cost_usd']:.4f}")
     if report.stopped_reason:
         print("Stopped early: " + report.stopped_reason)

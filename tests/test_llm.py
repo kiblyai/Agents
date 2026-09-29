@@ -65,7 +65,7 @@ def test_daily_cap_stops_immediately_but_per_minute_cap_retries():
 
     llm = LLM(FakeClient(flaky), "m", rpm=0, sleep=no_sleep)
     assert asyncio.run(llm.complete_json(system="s", user="u", schema=Out)).ok
-    assert llm.usage.retries == 2
+    assert llm.usage.retries == 2 and llm.usage.failed_attempts == 2
 
 
 def test_web_search_plugin_only_when_asked():

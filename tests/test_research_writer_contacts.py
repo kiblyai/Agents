@@ -157,3 +157,25 @@ def test_load_dotenv_never_overrides_existing_env(tmp_path, monkeypatch):
     assert s.api_key == "sk-or-file" and s.model == "from/shell" and s.rpm == 18.0
     assert "sk-or-file" not in repr(s)
     assert load_dotenv(tmp_path / "missing.env") == []
+
+
+def test_verdict_and_score_cannot_disagree():
+    # the Linear case: "not_fit" but 9/10
+    out = finalize(CompanyResearch(fits_icp=False, score=9), PAGES, TODAY)
+    assert out.score == 4 and out.score_reasons[-1] == "capped at 4: judged not a fit"
+
+
+def test_why_now_prefers_buying_signals_over_changelog_trivia():
+    # the PostHog/Resend case: a changelog entry chosen over hiring
+    pages = [Page(url="https://x.com/", text="BigQuery service account imports shipped. We are hiring a Head of Growth.")]
+    r = CompanyResearch(why_now_index=0, signals=[
+        Signal(type="product_update", evidence="BigQuery service account imports", source_url="https://x.com/", date="2026-09"),
+        Signal(type="hiring", evidence="hiring a Head of Growth", source_url="https://x.com/"),
+    ])
+    assert finalize(r, pages, TODAY).why_now == "hiring a Head of Growth"
+    # among equal-priority signals the model's own choice wins
+    r2 = CompanyResearch(why_now_index=1, signals=[
+        Signal(type="hiring", evidence="BigQuery service account imports", source_url="https://x.com/"),
+        Signal(type="hiring", evidence="hiring a Head of Growth", source_url="https://x.com/"),
+    ])
+    assert finalize(r2, pages, TODAY).why_now == "hiring a Head of Growth"

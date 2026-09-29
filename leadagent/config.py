@@ -45,6 +45,9 @@ class ICP:
     signals: list[str] = field(default_factory=list)
     exclude: list[str] = field(default_factory=list)
     min_score: int = 6
+    # Which signal types make the best "why now", strongest first.
+    signal_priority: list[str] = field(default_factory=lambda: [
+        "hiring", "funding", "leadership", "expansion", "launch", "product_update", "other"])
 
     def fingerprint(self) -> str:
         """Changes whenever the spec changes, so cached results from an older spec are ignored."""

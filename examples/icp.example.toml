@@ -17,6 +17,8 @@ signals = [
   "new marketing or sales leader",
 ]
 exclude = ["agencies and consultancies", "consumer apps", "companies over 500 employees"]
+# Which kinds of signal make the best "why now", strongest first.
+signal_priority = ["hiring", "funding", "leadership", "expansion", "launch", "product_update", "other"]
 # Companies scoring below this are left out of leads.csv (still listed in companies.csv).
 min_score = 6
 

@@ -33,6 +33,7 @@ class Usage:
     cost_usd: float = 0.0
     repairs: int = 0
     retries: int = 0
+    failed_attempts: int = 0  # calls the provider rejected (busy, timeout, server error)
     models: dict[str, int] = field(default_factory=dict)  # which model actually served each request
 
 
@@ -129,6 +130,7 @@ class LLM:
                 self._record(resp)
                 return resp
             except openai.RateLimitError as e:
+                self.usage.failed_attempts += 1
                 if re.search(r"per[- ]day|daily", str(e), re.I):
                     raise DailyLimitError(str(e)) from e
                 if attempt == self.max_retries:
@@ -136,6 +138,7 @@ class LLM:
                 self.usage.retries += 1
                 await self.sleep(min(60.0, 10.0 * (attempt + 1)))
             except RETRYABLE:
+                self.usage.failed_attempts += 1
                 if attempt == self.max_retries:
                     raise
                 self.usage.retries += 1
