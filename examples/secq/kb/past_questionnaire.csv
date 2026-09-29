@@ -1,0 +1,3 @@
+Question,Answer,Comments
+Do you use subprocessors to process customer data?,Yes,"Our current list of subprocessors is published at northwind.example/subprocessors and customers are notified 30 days before changes."
+Do you have a SOC 2 Type II report?,Yes,"Our SOC 2 Type II report covers security and availability and is shared under NDA."

@@ -9,6 +9,8 @@ import tomllib
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from agentkit.env import load_dotenv  # noqa: F401  (re-exported for callers)
+
 DEFAULT_BANNED_PHRASES = [
     "hope this email finds you",
     "hope you're well",
@@ -95,34 +97,6 @@ def load_spec(path: str | Path) -> tuple[ICP, WriterConfig]:
     if "banned_phrases" in writer_data and writer_data.get("extend_default_banned", True):
         writer.banned_phrases = sorted(set(DEFAULT_BANNED_PHRASES) | set(writer.banned_phrases))
     return icp, writer
-
-
-def load_dotenv(path: str | Path = ".env") -> list[str]:
-    """Load KEY=VALUE lines from a local .env file into the environment.
-
-    Variables already set in the environment win, so keys set in your shell or hosting settings are never
-    overridden. Returns the names loaded (never the values). The .env file is git-ignored.
-    """
-    path = Path(path)
-    if not path.is_file():
-        return []
-    loaded = []
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        line = raw.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        if line.startswith("export "):
-            line = line[len("export "):]
-        key, _, value = line.partition("=")
-        key, value = key.strip(), value.strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
-            value = value[1:-1]
-        elif " #" in value:
-            value = value.split(" #", 1)[0].rstrip()
-        if key and value and key not in os.environ:
-            os.environ[key] = value
-            loaded.append(key)
-    return loaded
 
 
 def _env_bool(name: str, default: bool) -> bool:
