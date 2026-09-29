@@ -1,0 +1,26 @@
+# Target-customer spec for one client. Copy this file per client and edit.
+
+[icp]
+name = "Seed-Series A B2B SaaS building a growth team"
+description = "B2B software companies that recently raised money and are hiring their first marketing or growth people, so they will soon need outbound pipeline."
+industries = ["B2B SaaS", "developer tools", "fintech"]
+employee_range = [10, 150]
+geographies = ["United States", "United Kingdom", "Canada"]
+# Contacts are matched to these titles, best first.
+target_titles = ["Head of Growth", "VP Marketing", "Head of Marketing", "CMO", "Founder", "CEO"]
+# What counts as a reason to reach out now.
+signals = [
+  "hiring marketing, growth or sales roles",
+  "raised funding in the last 12 months",
+  "launched a new product or entered a new market",
+  "new marketing or sales leader",
+]
+exclude = ["agencies and consultancies", "consumer apps", "companies over 500 employees"]
+# Companies scoring below this are left out of leads.csv (still listed in companies.csv).
+min_score = 6
+
+[writer]
+max_words = 25
+tone = "plain and specific; no flattery, no hype, no exclamation marks"
+# Added to the built-in banned list.
+banned_phrases = ["excited to", "exciting times"]
