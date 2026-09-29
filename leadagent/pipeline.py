@@ -15,10 +15,17 @@ from .models import CompanyResult
 from .research import research_company
 from .writer import write_first_line
 
+# Bump when research or writing logic changes, so cached results from older logic are redone.
+CACHE_VERSION = "2"
+
+
+def cache_key(icp: ICP) -> str:
+    return f"{icp.fingerprint()}-v{CACHE_VERSION}"
+
 
 async def process_company(domain: str, name: str, *, icp: ICP, writer_cfg: WriterConfig, settings: Settings,
                           llm, reader) -> CompanyResult:
-    result = CompanyResult(domain=domain, input_name=name, icp_hash=icp.fingerprint())
+    result = CompanyResult(domain=domain, input_name=name, icp_hash=cache_key(icp))
     pages = await reader.read(domain)
     result.pages = [p.url for p in pages]
     if not pages:
@@ -66,7 +73,7 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
     started = time.monotonic()
     todo = companies[:limit] if limit else list(companies)
     cache_dir.mkdir(parents=True, exist_ok=True)
-    icp_hash = icp.fingerprint()
+    icp_hash = cache_key(icp)
     queue: asyncio.Queue = asyncio.Queue()
     for item in todo:
         queue.put_nowait(item)
@@ -129,6 +136,7 @@ def summary(report: RunReport, usage, total_input: int) -> dict:
         "prompt_tokens": usage.prompt_tokens,
         "completion_tokens": usage.completion_tokens,
         "cost_usd": round(usage.cost_usd, 4),
+        "models_used": usage.models,
         "requests_per_new_company": round(usage.requests / fresh, 2) if fresh else None,
         "cost_per_new_company_usd": round(usage.cost_usd / fresh, 5) if fresh else None,
         "elapsed_s": round(report.elapsed_s, 1),

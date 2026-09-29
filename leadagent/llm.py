@@ -6,7 +6,7 @@ import asyncio
 import json
 import re
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Awaitable, Callable, TypeVar
 
 import openai
@@ -33,6 +33,7 @@ class Usage:
     cost_usd: float = 0.0
     repairs: int = 0
     retries: int = 0
+    models: dict[str, int] = field(default_factory=dict)  # which model actually served each request
 
 
 class RateLimiter:
@@ -135,6 +136,9 @@ class LLM:
 
     def _record(self, resp) -> None:
         self.usage.requests += 1
+        served = getattr(resp, "model", None)
+        if served:
+            self.usage.models[served] = self.usage.models.get(served, 0) + 1
         u = getattr(resp, "usage", None)
         if u is None:
             return
@@ -146,12 +150,25 @@ class LLM:
         if isinstance(cost, (int, float)):
             self.usage.cost_usd += float(cost)
 
+    @staticmethod
+    def _content(resp) -> tuple[str | None, str | None]:
+        if not getattr(resp, "choices", None):
+            return None, None
+        choice = resp.choices[0]
+        return choice.message.content, getattr(choice, "finish_reason", None)
+
     async def complete_json(self, *, system: str, user: str, schema: type[T], model: str | None = None,
                             max_tokens: int = 1500, web_results: int = 0) -> T:
         model = model or self.model
         messages = [{"role": "system", "content": system}, {"role": "user", "content": user}]
         resp = await self._create(model=model, messages=messages, max_tokens=max_tokens, web_results=web_results)
-        content = resp.choices[0].message.content if resp.choices else None
+        content, finish = self._content(resp)
+        if finish == "length" or not (content or "").strip():
+            # "thinking" models can spend the whole token budget before answering: give them room once
+            self.usage.retries += 1
+            max_tokens *= 2
+            resp = await self._create(model=model, messages=messages, max_tokens=max_tokens, web_results=web_results)
+            content, finish = self._content(resp)
         try:
             return schema.model_validate(extract_json(content))
         except (ValueError, ValidationError) as err:
@@ -163,8 +180,9 @@ class LLM:
                                             "Reply with only the corrected JSON object."},
             ]
             resp = await self._create(model=model, messages=messages, max_tokens=max_tokens, web_results=0)
-            content = resp.choices[0].message.content if resp.choices else None
+            content, _ = self._content(resp)
             try:
                 return schema.model_validate(extract_json(content))
             except (ValueError, ValidationError) as err2:
-                raise LLMOutputError(str(err2)[:500]) from err2
+                served = getattr(resp, "model", None) or model
+                raise LLMOutputError(f"{served}: {str(err2)[:400]}") from err2

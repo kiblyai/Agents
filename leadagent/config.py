@@ -40,6 +40,7 @@ class ICP:
     industries: list[str] = field(default_factory=list)
     employee_range: list[int] = field(default_factory=list)
     geographies: list[str] = field(default_factory=list)
+    stages: list[str] = field(default_factory=list)  # funding stages, e.g. ["Seed", "Series A"]
     target_titles: list[str] = field(default_factory=list)
     signals: list[str] = field(default_factory=list)
     exclude: list[str] = field(default_factory=list)
@@ -55,6 +56,8 @@ class ICP:
             lines.append("Industries: " + ", ".join(self.industries))
         if len(self.employee_range) == 2:
             lines.append(f"Employees: {self.employee_range[0]}-{self.employee_range[1]}")
+        if self.stages:
+            lines.append("Funding stage: " + ", ".join(self.stages))
         if self.geographies:
             lines.append("Geographies: " + ", ".join(self.geographies))
         if self.signals:
@@ -66,6 +69,8 @@ class ICP:
 
 @dataclass
 class WriterConfig:
+    offer: str = ""  # what the sender sells; keeps the line relevant without pitching
+    min_words: int = 6
     max_words: int = 25
     banned_phrases: list[str] = field(default_factory=lambda: list(DEFAULT_BANNED_PHRASES))
     tone: str = "plain and specific; no flattery, no hype, no exclamation marks"

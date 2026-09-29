@@ -91,3 +91,29 @@ def test_rate_limiter_spaces_requests():
 
     asyncio.run(go())
     assert slept == [3.0, 3.0]  # 60s / 20 requests
+
+
+def test_truncated_or_empty_reply_gets_more_room_once():
+    from types import SimpleNamespace
+
+    def respond(kw):
+        if kw["max_tokens"] == 100:  # thinking model used the whole budget
+            return SimpleNamespace(choices=[SimpleNamespace(message=SimpleNamespace(content=""), finish_reason="length")],
+                                   usage=None, model="some/thinking-model:free")
+        return '{"ok": true}'
+
+    client = FakeClient(respond)
+    llm = LLM(client, "m", rpm=0, sleep=no_sleep)
+    assert asyncio.run(llm.complete_json(system="s", user="u", schema=Out, max_tokens=100)).ok
+    assert [c["max_tokens"] for c in client.calls] == [100, 200]
+    assert llm.usage.retries == 1 and llm.usage.repairs == 0
+    assert llm.usage.models == {"some/thinking-model:free": 1}
+
+
+def test_output_error_names_the_model_that_failed():
+    from types import SimpleNamespace
+
+    client = FakeClient(lambda kw: SimpleNamespace(
+        choices=[SimpleNamespace(message=SimpleNamespace(content="nope"), finish_reason="stop")], usage=None, model="bad/model:free"))
+    with pytest.raises(LLMOutputError, match="bad/model:free"):
+        asyncio.run(LLM(client, "m", rpm=0, sleep=no_sleep).complete_json(system="s", user="u", schema=Out))

@@ -37,6 +37,30 @@ async def _check(args) -> None:
     print(f"model {s.model} replied ok={reply.ok}; tokens in/out {llm.usage.prompt_tokens}/{llm.usage.completion_tokens}")
 
 
+async def _models(args) -> None:
+    """List models from OpenRouter's public catalogue, flagging which promise JSON output."""
+    import httpx
+
+    base = Settings.from_env().base_url.rstrip("/")
+    async with httpx.AsyncClient(timeout=30) as http:
+        r = await http.get(f"{base}/models")
+        r.raise_for_status()
+        models = r.json().get("data", [])
+
+    def is_free(m) -> bool:
+        p = m.get("pricing") or {}
+        return str(p.get("prompt", "1")) in ("0", "0.0") and str(p.get("completion", "1")) in ("0", "0.0")
+
+    rows = [m for m in models if is_free(m)] if args.free else models
+    rows.sort(key=lambda m: ("response_format" not in (m.get("supported_parameters") or []), m.get("id", "")))
+    print(f"{'model id':60} {'context':>9}  json")
+    for m in rows:
+        params = m.get("supported_parameters")
+        json_ok = "?" if params is None else ("yes" if {"response_format", "structured_outputs"} & set(params) else "no")
+        print(f"{m.get('id', ''):60} {m.get('context_length') or '':>9}  {json_ok}")
+    print(f"\n{len(rows)} models. Pin one with LEADAGENT_MODEL=<id> in .env; prefer json=yes.")
+
+
 async def _run(args) -> None:
     s = _settings(args)
     icp, writer_cfg = load_spec(args.icp)
@@ -84,10 +108,13 @@ def main(argv: list[str] | None = None) -> None:
     common(r)
     c = sub.add_parser("check", help="test the API key and model with one tiny request")
     common(c)
+    m = sub.add_parser("models", help="list OpenRouter models (no key needed)")
+    m.add_argument("--free", action="store_true", help="only free models")
 
     args = p.parse_args(argv)
     load_dotenv()  # keys stay in the environment; .env is optional and git-ignored
-    asyncio.run(_run(args) if args.cmd == "run" else _check(args))
+    handler = {"run": _run, "check": _check, "models": _models}[args.cmd]
+    asyncio.run(handler(args))
 
 
 if __name__ == "__main__":

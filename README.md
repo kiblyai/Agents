@@ -7,9 +7,14 @@ A research agent that turns a list of companies into scored, cited leads with a 
 For each company in your CSV:
 
 1. **Reads its website.** It fetches the homepage plus up to 3 pages that carry buying signals (careers or job board, news or blog, about, customers), and honours `robots.txt`.
-2. **Scores fit against your target-customer spec** (0-10) and lists the reasons to reach out now. Each reason cites the page it came from.
-3. **Checks the citations.** It drops any signal whose cited page it never read, and marks a signal *verified* only if its evidence is actually on that page. This catches invented facts.
-4. **Writes one opening line** from the strongest verified signal. It rejects lines that are too long, use banned phrases or contain `!`, and retries once.
+2. **Judges each target criterion** (industry, size, funding stage, geography, exclusions) as met, not met or unknown, citing evidence. It scores fit 0-10 and lists the reasons to reach out now, each citing the page it came from.
+3. **Applies the checks a model can't be trusted with:**
+   - drops signals that cite pages it never read
+   - marks a signal *verified* only if its evidence is actually on the cited page
+   - flags anything dated more than 12 months ago as old news, not a reason to reach out now
+   - caps the score at 4 when any criterion is clearly not met
+   - builds the "why now" only from a verified, current signal
+4. **Writes one opening line** that speaks to the reader ("you"/"your") about one verified fact. It rejects placeholders, lines that are too short or too long, banned phrases and `!`, and retries once.
 5. **Matches contacts** from your CSV (for example an Apollo export) to your target titles.
 
 It writes to `out/`:
@@ -22,7 +27,7 @@ It writes to `out/`:
 | `companies.jsonl` | Full research records |
 | `run_summary.json` | Counts, model requests, tokens, cost |
 
-Researched companies are cached in `out/cache/`. Re-running skips them, so an interrupted run, or one that hit the daily free limit, continues where it stopped. Unreachable sites and errors are retried on the next run. Editing the spec invalidates the cache.
+Researched companies are cached in `out/cache/`. Re-running skips them, so an interrupted run, or one that hit the daily free limit, continues where it stopped. Unreachable sites and errors are retried on the next run. Editing the spec, or updating to a version with changed research logic, invalidates the cache.
 
 ## Setup
 
@@ -30,6 +35,15 @@ Researched companies are cached in `out/cache/`. Re-running skips them, so an in
 pip install -e ".[dev]"
 python -m leadagent check               # one tiny request to confirm key and model
 ```
+
+Pick a model. The default `openrouter/free` sends each request to whichever free model is available, which gives uneven results. List the free models and pin one that supports JSON output:
+
+```bash
+python -m leadagent models --free          # "json yes" = the model supports JSON output mode
+echo 'LEADAGENT_MODEL=<model id>' >> .env
+```
+
+`run_summary.json` shows which models actually served your requests (`models_used`), and error messages name the model that failed.
 
 API keys live only in environment variables, never in code, specs or output files. Set `OPENROUTER_API_KEY` (from openrouter.ai/keys) in one of these places:
 
@@ -46,6 +60,7 @@ cp examples/icp.example.toml my_client.toml     # edit for the client
 python -m leadagent run --icp my_client.toml --companies companies.csv --out out/client_a --limit 25
 ```
 
+- In the spec, `stages` sets the funding stages you want, and `[writer] offer` describes what you sell, so the opening line stays relevant without pitching.
 - `--companies` needs a column called `domain` or `website`. Optional contact columns: `First Name`, `Last Name`, `Title`, `Email`. Contacts can also come from a separate file via `--contacts`.
 - `--model <id>` picks a model (default `openrouter/free`). `--web-search` adds OpenRouter web search for recent news. `--rpm` and `--concurrency` control speed.
 

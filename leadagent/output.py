@@ -12,15 +12,21 @@ from .models import CompanyResult, Contact
 
 LEAD_COLUMNS = ["domain", "company", "score", "why_now", "signals", "sources", "contact_name", "title", "email",
                 "email_status", "first_line", "first_line_status"]
-COMPANY_COLUMNS = ["domain", "company", "status", "score", "fits_icp", "why_now", "summary", "disqualifiers",
-                   "pages_read", "error"]
+COMPANY_COLUMNS = ["domain", "company", "status", "score", "fits_icp", "why_now", "criteria", "summary",
+                   "disqualifiers", "pages_read", "error"]
 
 
 def _signals(r: CompanyResult) -> str:
     if not r.research:
         return ""
-    sigs = sorted(r.research.signals, key=lambda s: not s.verified)
-    return " | ".join(f"{s.type or 'signal'}: {s.evidence}{'' if s.verified else ' (unverified)'}" for s in sigs)
+    sigs = sorted(r.research.signals, key=lambda s: (not s.verified, s.stale))
+
+    def label(s):
+        flags = [f for f, on in (("unverified", not s.verified), ("old", s.stale)) if on]
+        date = f" [{s.date}]" if s.date else ""
+        return f"{s.type or 'signal'}: {s.evidence}{date}" + (f" ({', '.join(flags)})" if flags else "")
+
+    return " | ".join(label(s) for s in sigs)
 
 
 def _sources(r: CompanyResult) -> str:
@@ -66,6 +72,8 @@ def company_rows(results: list[CompanyResult]) -> list[dict]:
             "score": res.score if res else "",
             "fits_icp": res.fits_icp if res else "",
             "why_now": res.why_now if res else "",
+            "criteria": " | ".join(f"{c.name}: {c.status}" + (f" ({c.evidence})" if c.evidence else "")
+                                   for c in res.criteria) if res else "",
             "summary": res.summary if res else "",
             "disqualifiers": " | ".join(res.disqualifiers) if res else "",
             "pages_read": len(r.pages),

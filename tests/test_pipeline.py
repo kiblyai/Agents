@@ -45,7 +45,7 @@ def responder(kwargs):
     if "COMPANY DOMAIN: meh.com" in prompt:
         return as_json(MEH_RESEARCH)
     if "Company: Acme" in prompt:
-        if "Fix these problems" in prompt:
+        if "Your previous line was" in prompt:
             return as_json({"line": "Your new Head of Growth role after the Series A usually means outbound is next."})
         return as_json({"line": "I noticed you are hiring a Head of Growth!"})
     raise AssertionError("unexpected prompt")

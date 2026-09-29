@@ -6,6 +6,7 @@ description = "B2B software companies that recently raised money and are hiring 
 industries = ["B2B SaaS", "developer tools", "fintech"]
 employee_range = [10, 150]
 geographies = ["United States", "United Kingdom", "Canada"]
+stages = ["Pre-seed", "Seed", "Series A"]
 # Contacts are matched to these titles, best first.
 target_titles = ["Head of Growth", "VP Marketing", "Head of Marketing", "CMO", "Founder", "CEO"]
 # What counts as a reason to reach out now.
@@ -20,6 +21,9 @@ exclude = ["agencies and consultancies", "consumer apps", "companies over 500 em
 min_score = 6
 
 [writer]
+# What you sell. The line stays relevant to it without pitching.
+offer = "researched outbound lead lists that help a new growth team book meetings"
+min_words = 6
 max_words = 25
 tone = "plain and specific; no flattery, no hype, no exclamation marks"
 # Added to the built-in banned list.
