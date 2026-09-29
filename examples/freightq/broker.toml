@@ -1,0 +1,28 @@
+# Settings for the fictional brokerage in the example. Copy this file and change it for a real one.
+[broker]
+name = "Coho Freight Brokerage"
+signature = """Alex Morgan
+Coho Freight Brokerage
+quotes@cohofreight.example"""
+target_margin = 0.15      # share of the customer's linehaul rate
+min_margin = 150          # dollars per load, at least
+round_to = 25             # round customer rates up to this
+quote_valid_days = 3
+lookback_days = 120       # older lane history is used only when nothing newer exists
+max_comparables = 5
+required = ["origin", "destination", "equipment", "pickup_date", "weight"]
+small_shipment_lbs = 10000
+small_shipment_pallets = 6
+
+[accessorials]            # added to the customer's rate
+extra_stop = 100
+tarps = 125
+hazmat = 200
+team = 600
+liftgate = 75
+
+[max_weight_lbs]          # flag heavier loads
+van = 45000
+reefer = 43500
+flatbed = 48000
+stepdeck = 48000

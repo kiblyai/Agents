@@ -98,7 +98,7 @@ def write_combined(case: CaseFile, out_path: Path, bookmarks: list[tuple[str, in
     """
     from pypdf import PdfReader, PdfWriter
 
-    from .pdfgen import stamp_pdf
+    from agentkit.pdfgen import stamp_pdf
 
     writer = PdfWriter()
     starts: list[tuple[str, int]] = []

@@ -1,4 +1,4 @@
-"""A tiny PDF writer (no extra dependencies): text pages for the synthetic records, and page-number stamps."""
+"""A tiny PDF writer (no extra dependencies): text pages for synthetic examples, and page-number stamps."""
 
 from __future__ import annotations
 
