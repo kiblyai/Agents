@@ -68,6 +68,22 @@ def test_daily_cap_stops_immediately_but_per_minute_cap_retries():
     assert llm.usage.retries == 2 and llm.usage.failed_attempts == 2
 
 
+def test_the_cut_off_daily_limit_case_keeps_the_providers_whole_message():
+    # founder's first real secq run: the stop reason ended "Add 5 credits to )", cut off before the useful part
+    msg = "Rate limit exceeded: free-models-per-day. Add 5 credits to unlock 1000 free model requests per day"
+    req = httpx.Request("POST", "https://openrouter.ai/api/v1/chat/completions")
+    body = {"message": msg, "code": 429, "metadata": {"headers": {"X-RateLimit-Reset": "1790726400000"}}}
+
+    def daily(kw):
+        raise openai.RateLimitError(f"Error code: 429 - {{'error': {body}}}", response=httpx.Response(429, request=req),
+                                    body=body)
+
+    llm = LLM(FakeClient(daily), "m", rpm=0, sleep=no_sleep)
+    with pytest.raises(DailyLimitError) as info:
+        asyncio.run(llm.complete_json(system="s", user="u", schema=Out))
+    assert str(info.value) == msg + " (resets 2026-09-30 00:00 UTC)"
+
+
 def test_web_search_plugin_only_when_asked():
     client = FakeClient(lambda kw: '{"ok": true}')
     llm = LLM(client, "m", rpm=0, sleep=no_sleep)

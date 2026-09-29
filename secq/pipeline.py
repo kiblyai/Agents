@@ -86,7 +86,7 @@ async def draft_all(questions: list[Question], kb: KnowledgeBase, opts: Options,
                 drafted = await llm.complete_json(system=system, user=prompt, schema=DraftBatch, max_tokens=opts.max_tokens)
                 path.write_text(drafted.model_dump_json(indent=1))
             except DailyLimitError as e:
-                run.stopped_reason = f"daily request limit reached; re-run tomorrow to continue ({str(e)[:100]})"
+                run.stopped_reason = f"daily request limit reached; re-run after it resets to continue. Provider says: {str(e)[:300]}"
                 run.results += [missing_result(q, "not processed yet: re-run to continue") for _, q, _ in batch]
                 continue
             except Exception as e:  # one bad batch must not sink the questionnaire

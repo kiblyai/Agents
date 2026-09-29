@@ -104,7 +104,7 @@ async def run(companies: list[tuple], *, icp: ICP, writer_cfg: WriterConfig, set
                 res = await process_company(domain, name, icp=icp, writer_cfg=writer_cfg, settings=settings,
                                             llm=llm, reader=reader, facts=facts)
             except DailyLimitError as e:
-                report.stopped_reason = f"daily request limit reached; re-run tomorrow to continue ({str(e)[:120]})"
+                report.stopped_reason = f"daily request limit reached; re-run after it resets to continue. Provider says: {str(e)[:300]}"
                 stop.set()
                 return
             except openai.RateLimitError as e:
