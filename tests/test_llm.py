@@ -117,3 +117,11 @@ def test_output_error_names_the_model_that_failed():
         choices=[SimpleNamespace(message=SimpleNamespace(content="nope"), finish_reason="stop")], usage=None, model="bad/model:free"))
     with pytest.raises(LLMOutputError, match="bad/model:free"):
         asyncio.run(LLM(client, "m", rpm=0, sleep=no_sleep).complete_json(system="s", user="u", schema=Out))
+
+
+def test_fallback_models_sent_to_openrouter():
+    client = FakeClient(lambda kw: '{"ok": true}')
+    llm = LLM(client, "main/model:free", rpm=0, sleep=no_sleep,
+              fallback_models=["main/model:free", "b:free", "c:free", "d:free", "e:free"])
+    asyncio.run(llm.complete_json(system="s", user="u", schema=Out))
+    assert client.calls[0]["extra_body"]["models"] == ["main/model:free", "b:free", "c:free", "d:free"]

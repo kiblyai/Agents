@@ -86,11 +86,13 @@ def extract_json(text: str | None) -> dict:
 
 class LLM:
     def __init__(self, client, model: str, rpm: float = 18.0, *, openrouter: bool = True,
+                 fallback_models: list[str] | None = None,
                  max_retries: int = 4, sleep: Callable[[float], Awaitable[None]] = asyncio.sleep,
                  clock: Callable[[], float] = time.monotonic):
         self.client = client
         self.model = model
         self.openrouter = openrouter
+        self.fallback_models = list(fallback_models or [])
         self.max_retries = max_retries
         self.sleep = sleep
         self.limiter = RateLimiter(rpm, clock=clock, sleep=sleep)
@@ -100,12 +102,17 @@ class LLM:
     def from_settings(cls, settings) -> "LLM":
         headers = {"X-Title": settings.app_title} if "openrouter.ai" in settings.base_url else None
         client = openai.AsyncOpenAI(api_key=settings.api_key, base_url=settings.base_url, default_headers=headers)
-        return cls(client, settings.model, settings.rpm, openrouter="openrouter.ai" in settings.base_url)
+        return cls(client, settings.model, settings.rpm, openrouter="openrouter.ai" in settings.base_url,
+                   fallback_models=settings.fallback_models)
 
     async def _create(self, *, model: str, messages: list[dict], max_tokens: int, web_results: int):
         extra_body: dict = {}
         if self.openrouter:
             extra_body["usage"] = {"include": True}
+            backups = [m for m in self.fallback_models if m != model][:3]
+            if backups:
+                # OpenRouter tries these in order if the first is rate-limited or down
+                extra_body["models"] = [model, *backups]
             if web_results:
                 extra_body["plugins"] = [{"id": "web", "max_results": web_results}]
         for attempt in range(self.max_retries + 1):

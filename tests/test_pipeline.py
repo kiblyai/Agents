@@ -117,3 +117,29 @@ def test_bad_model_output_marks_company_error_and_run_continues(tmp_path):
     assert by["acme.com"].status == "error" and "LLMOutputError" in by["acme.com"].error
     assert by["meh.com"].status == "not_fit"
     assert not (tmp_path / "cache" / "acme.com.json").exists()  # errors are retried next run
+
+
+def test_run_stops_when_model_stays_busy(tmp_path):
+    import openai
+
+    def busy(kwargs):
+        req = httpx.Request("POST", "https://openrouter.ai/api/v1/chat/completions")
+        raise openai.RateLimitError("google/gemma-4-31b-it:free is temporarily rate-limited upstream",
+                                    response=httpx.Response(429, request=req), body=None)
+
+    sites = dict(SITES)
+    domains = [f"co{i}.com" for i in range(6)]
+    for d in domains:
+        sites[f"https://{d}/"] = (200, "<p>B2B software for clinics.</p>")
+    settings = Settings(api_key="x", rpm=0, concurrency=1)
+    llm = LLM(FakeClient(busy), "google/gemma-4-31b-it:free", rpm=0, sleep=no_sleep, max_retries=1)
+
+    async def go():
+        async with httpx.AsyncClient(transport=site_transport(sites)) as http:
+            return await run([(d, d) for d in domains], icp=ICP_SPEC, writer_cfg=WriterConfig(), settings=settings,
+                             llm=llm, reader=SiteReader(http), cache_dir=tmp_path / "cache", progress=lambda _: None)
+
+    report = asyncio.run(go())
+    assert len(report.results) == 3 and all("model busy" in r.error for r in report.results)
+    assert "rate-limited for 3 companies in a row" in report.stopped_reason
+    assert not list((tmp_path / "cache").iterdir())  # nothing cached, so a re-run retries them

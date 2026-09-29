@@ -22,7 +22,8 @@ class _Ping(BaseModel):
 
 
 def _settings(args) -> Settings:
-    s = Settings.from_env(model=args.model, rpm=args.rpm, concurrency=args.concurrency,
+    fallbacks = [m.strip() for m in args.fallback.split(",") if m.strip()] if args.fallback else None
+    s = Settings.from_env(model=args.model, fallback_models=fallbacks, rpm=args.rpm, concurrency=args.concurrency,
                           web_search=True if args.web_search else None, max_pages=args.max_pages)
     if not s.api_key:
         sys.exit("OPENROUTER_API_KEY is not set. Put it in your environment or a local .env file (see README.md).")
@@ -75,7 +76,9 @@ async def _run(args) -> None:
     llm = LLM.from_settings(s)
     async with SiteReader.default_client() as http:
         reader = SiteReader(http, max_pages=s.max_pages, max_chars_per_page=s.max_chars_per_page)
-        print(f"{len(companies)} companies; model {s.model}; {s.rpm:g} requests/min; web search {'on' if s.web_search else 'off'}")
+        backups = f" (backups: {', '.join(s.fallback_models)})" if s.fallback_models else ""
+        print(f"{len(companies)} companies; model {s.model}{backups}; {s.rpm:g} requests/min; "
+              f"web search {'on' if s.web_search else 'off'}")
         report = await run(companies, icp=icp, writer_cfg=writer_cfg, settings=s, llm=llm, reader=reader,
                            cache_dir=out / "cache", limit=args.limit)
     leads = await lead_rows(report.results, contacts, icp.target_titles, s.contacts_per_company, SyntaxOnlyVerifier())
@@ -98,6 +101,7 @@ def main(argv: list[str] | None = None) -> None:
 
     def common(sp):
         sp.add_argument("--model", help="OpenRouter model id (default: LEADAGENT_MODEL or openrouter/free)")
+        sp.add_argument("--fallback", help="comma-separated backup model ids, tried when the main one is busy")
         sp.add_argument("--rpm", type=float, help="max model requests per minute (default 18)")
         sp.add_argument("--concurrency", type=int, help="companies processed in parallel (default 4)")
         sp.add_argument("--web-search", action="store_true", help="add OpenRouter web search (paid per result)")

@@ -132,6 +132,7 @@ class Settings:
     base_url: str = "https://openrouter.ai/api/v1"
     model: str = "openrouter/free"  # routes to an available free model; set a paid model for client work
     writer_model: str = ""  # empty = same as model
+    fallback_models: list[str] = field(default_factory=list)  # tried in order when the main model is busy or down
     rpm: float = 18.0  # OpenRouter free models allow 20 requests/minute
     concurrency: int = 4
     web_search: bool = False  # OpenRouter web plugin, billed per result
@@ -148,6 +149,7 @@ class Settings:
             base_url=os.environ.get("LEADAGENT_BASE_URL", cls.base_url),
             model=os.environ.get("LEADAGENT_MODEL", cls.model),
             writer_model=os.environ.get("LEADAGENT_WRITER_MODEL", ""),
+            fallback_models=[m.strip() for m in os.environ.get("LEADAGENT_FALLBACK_MODELS", "").split(",") if m.strip()],
             rpm=float(os.environ.get("LEADAGENT_RPM", cls.rpm)),
             concurrency=int(os.environ.get("LEADAGENT_CONCURRENCY", cls.concurrency)),
             web_search=_env_bool("LEADAGENT_WEB_SEARCH", cls.web_search),

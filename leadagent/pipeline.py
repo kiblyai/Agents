@@ -10,7 +10,11 @@ from pathlib import Path
 from typing import Callable
 
 from .config import ICP, Settings, WriterConfig
+import openai
+
 from .llm import DailyLimitError
+
+BUSY_LIMIT = 3  # consecutive companies failing on rate limits before the run stops
 from .models import CompanyResult
 from .research import research_company
 from .writer import write_first_line
@@ -81,9 +85,10 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
     report = RunReport()
     stop = asyncio.Event()
     done = 0
+    busy_streak = 0
 
     async def worker():
-        nonlocal done
+        nonlocal done, busy_streak
         while not stop.is_set():
             try:
                 domain, name = queue.get_nowait()
@@ -101,9 +106,19 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
                 report.stopped_reason = f"daily request limit reached; re-run tomorrow to continue ({str(e)[:120]})"
                 stop.set()
                 return
+            except openai.RateLimitError as e:
+                res = CompanyResult(domain=domain, input_name=name, status="error",
+                                    error=f"model busy (rate-limited): {str(e)[:200]}", icp_hash=icp_hash)
+                busy_streak += 1
+                if busy_streak >= BUSY_LIMIT and not stop.is_set():
+                    report.stopped_reason = (f"the model was rate-limited for {busy_streak} companies in a row; re-run later, "
+                                             "pick another model, or set LEADAGENT_FALLBACK_MODELS")
+                    stop.set()
             except Exception as e:  # one bad company must not sink the run
                 res = CompanyResult(domain=domain, input_name=name, status="error",
                                     error=f"{type(e).__name__}: {e}"[:300], icp_hash=icp_hash)
+            else:
+                busy_streak = 0
             if res.status in ("qualified", "not_fit"):  # unreachable/error are retried next run (no model cost)
                 _cache_path(cache_dir, domain).write_text(res.model_dump_json(indent=2))
             results[domain] = res

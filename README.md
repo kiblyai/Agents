@@ -45,6 +45,14 @@ echo 'LEADAGENT_MODEL=<model id>' >> .env
 
 `run_summary.json` shows which models actually served your requests (`models_used`), and error messages name the model that failed.
 
+Free models are shared, so one can be busy ("rate-limited upstream") for a while. Give it backups, which OpenRouter tries in order (up to 3):
+
+```bash
+echo 'LEADAGENT_FALLBACK_MODELS=nvidia/nemotron-3-super-120b-a12b:free' >> .env
+```
+
+If a model stays busy for 3 companies in a row, the run stops instead of burning your daily requests. Re-run later; finished companies are skipped.
+
 API keys live only in environment variables, never in code, specs or output files. Set `OPENROUTER_API_KEY` (from openrouter.ai/keys) in one of these places:
 
 - **Your shell:** `export OPENROUTER_API_KEY=...`
