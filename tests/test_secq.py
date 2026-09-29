@@ -259,3 +259,36 @@ def test_hyphenated_phrases_and_247_find_the_right_passage():
                  section="Incident Response")
     ev = gather_evidence([q], kb, Options(company="x"))[0]
     assert next(iter(ev.passages.values())).source == "incident-response.md § Coverage"
+
+
+def test_the_breach_notice_case_gets_no_unrelated_past_answer():
+    # stand-in run on the example: "notify customers of a data breach" was offered the subprocessors past answer
+    # ("customers are notified 30 days before changes") because both mention customer data, and a "Yes" built on
+    # it passed every check
+    from secq.pipeline import gather_evidence
+
+    kb = load_kb(EXAMPLE_KB)
+    qs = [Question(key="S!13", sheet="S", row=13, qid="3.1",
+                   text="How quickly do you notify customers of a confirmed data breach?"),
+          Question(key="S!6", sheet="S", row=6, qid="1.1", text="Is customer data encrypted at rest?"),
+          Question(key="S!16", sheet="S", row=16, qid="4.1", text="Do you have a current SOC 2 Type II report?")]
+    breach, encryption, soc2 = gather_evidence(qs, kb, Options(company="x"))
+    assert not breach.library and not encryption.library
+    past = list(soc2.library.values())
+    assert [a.question for a in past] == ["Do you have a SOC 2 Type II report?"]
+    assert past[0].answer.startswith("Yes. Our SOC 2 Type II report covers")
+
+
+def test_numbers_must_match_whole_not_as_part_of_another_number():
+    from secq.docs import Passage
+
+    bk = Evidence(passages={"S1-1": Passage("P3", "dr.md § Backups", "Backups are encrypted with AES-256 and kept for 35 days.")})
+    q = Question(key="S!12", sheet="S", row=12, qid="1.4", text="Are backups retained for at least 3 months?")
+    r = check(Drafted(id="Q1", answer="Yes", explanation="Backups are kept for 35 days.", sources=["S1-1"],
+                      confidence="high", needs_review=False), q, bk)
+    assert r.needs_review and "mentions 3 " in r.review_note  # "3" is not backed by "35 days"
+
+    ok = Question(key="S!13", sheet="S", row=13, qid="1.5", text="What encryption protects backups?")
+    r2 = check(Drafted(id="Q1", answer="AES-256", explanation="Backups are encrypted with AES-256.", sources=["S1-1"],
+                       confidence="high", needs_review=False), ok, bk)
+    assert not r2.needs_review

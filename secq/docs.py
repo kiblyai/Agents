@@ -119,7 +119,9 @@ def read_library(path: Path, start_id: int) -> list[LibraryAnswer]:
         lay = layouts[q.sheet]
         ws = wb[q.sheet]
         parts = [ws.cell(q.row, c).value for c in (lay.a_col, lay.c_col) if c]
-        answer = " ".join(str(p).strip() for p in parts if p not in (None, ""))
+        vals = [str(p).strip() for p in parts if str(p or "").strip()]
+        # "Yes" + "Encrypted with AES-256." reads as "Yes. Encrypted with AES-256."
+        answer = ". ".join(v.rstrip(".") for v in vals) + "." if len(vals) > 1 else "".join(vals)
         if answer:
             out.append(LibraryAnswer(id=f"L{start_id + len(out)}", question=q.text, answer=answer,
                                      source=f"{path.name} {q.sheet} row {q.row}"))

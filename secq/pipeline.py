@@ -11,11 +11,11 @@ from typing import Callable
 from agentkit.llm import DailyLimitError
 
 from .docs import KnowledgeBase
-from .draft import SYSTEM, DraftBatch, DraftResult, Evidence, build_prompt, check, missing_result
+from .draft import SYSTEM, DraftBatch, DraftResult, Evidence, build_prompt, check, missing_result, overlap
 from .search import BM25
 from .sheet import Question
 
-CACHE_VERSION = "1"
+CACHE_VERSION = "2"
 
 
 @dataclass
@@ -48,7 +48,8 @@ def gather_evidence(questions: list[Question], kb: KnowledgeBase, opts: Options)
             hits = l_index.top(q.text, opts.library_k)
             best = hits[0][1] if hits else 0
             for rank, (i, score) in enumerate(hits, 1):
-                if score >= 0.5 * best:  # only close matches
+                # only close matches: the model is told to reuse their wording, so "customer data" alone is not enough
+                if score >= 0.5 * best and overlap(q.text, kb.library[i].question) >= 0.5:
                     ev.library[f"L{n}-{rank}"] = kb.library[i]
         out.append(ev)
     return out
