@@ -15,13 +15,14 @@ class Signal(BaseModel):
     """A reason to reach out now, tied to the page it came from."""
 
     type: str = ""
+    headline: str = ""  # plain-English version, blanked by us if the source doesn't support it
     evidence: str = ""
     source_url: str = ""
     date: str | None = None
     verified: bool = False  # set by us, not the model: evidence found on the cited page
     stale: bool = False  # set by us: dated more than 12 months ago
 
-    @field_validator("type", "evidence", "source_url", mode="before")
+    @field_validator("type", "headline", "evidence", "source_url", mode="before")
     @classmethod
     def _as_str(cls, v):
         return "" if v is None else str(v)

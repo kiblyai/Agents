@@ -119,8 +119,12 @@ def test_load_spec_and_fingerprint(tmp_path):
 
 def test_companies_and_contacts_from_csv(tmp_path):
     comp = tmp_path / "c.csv"
-    comp.write_text("Company,Website\nAcme,https://www.acme.com\nAcme again,acme.com\nBeta,beta.io\n,\n")
-    assert load_companies(comp) == [("acme.com", "Acme"), ("beta.io", "Beta")]
+    comp.write_text("Company,Website,# Employees,Latest Funding,Industry\nAcme,https://www.acme.com,45,Series A,Software\n"
+                    "Acme again,acme.com,,,\nBeta,beta.io,,,\n,,,,\n")
+    assert load_companies(comp) == [
+        ("acme.com", "Acme", {"Employees": "45", "Funding stage": "Series A", "Industry": "Software"}),
+        ("beta.io", "Beta", {}),
+    ]
     assert load_contacts(comp) == {}
 
     people = tmp_path / "p.csv"
@@ -179,3 +183,70 @@ def test_why_now_prefers_buying_signals_over_changelog_trivia():
         Signal(type="hiring", evidence="hiring a Head of Growth", source_url="https://x.com/"),
     ])
     assert finalize(r2, pages, TODAY).why_now == "hiring a Head of Growth"
+
+
+def test_unknown_size_and_stage_stay_below_threshold():
+    # the Retool case: "small (but growing) team" marketing copy, no headcount or funding anywhere -> qualified at 6
+    r = CompanyResearch(fits_icp=True, score=6, criteria=[
+        {"name": "industry", "status": "met"}, {"name": "size", "status": "unknown"},
+        {"name": "stage", "status": "unknown"}, {"name": "not_excluded", "status": "met"}])
+    out = finalize(r, PAGES, TODAY, unknown_cap=5)
+    assert out.score == 5 and out.fits_icp is False
+    assert "size and stage unknown" in out.score_reasons[-1]
+    # one of them known (e.g. from list data) is enough
+    r2 = CompanyResearch(fits_icp=True, score=8, criteria=[{"name": "company size", "status": "met"},
+                                                           {"name": "funding stage", "status": "unknown"}])
+    assert finalize(r2, PAGES, TODAY, unknown_cap=5).score == 8
+
+
+def test_real_disqualifiers_cap_but_negations_do_not():
+    # the Dagster case: being acquired must disqualify
+    out = finalize(CompanyResearch(fits_icp=True, score=6, disqualifiers=["Prefect is acquiring Dagster (2026-06)"]),
+                   PAGES, TODAY)
+    assert out.score == 4 and out.fits_icp is False and "disqualified" in out.score_reasons[-1]
+    # "no indication of..." or "none" are not disqualifiers
+    out2 = finalize(CompanyResearch(fits_icp=True, score=8,
+                                    disqualifiers=["None", "No indication of being an agency", "not a consumer app"]),
+                    PAGES, TODAY)
+    assert out2.score == 8 and out2.disqualifiers == []
+
+
+def test_list_data_is_a_citable_source():
+    facts = {"Employees": "45", "Funding stage": "Series A", "Last raised": "2026-07"}
+    r = CompanyResearch(signals=[
+        Signal(type="funding", headline="Raised a Series A in July 2026", evidence="Funding stage: Series A, last raised 2026-07",
+               source_url="list"),
+        Signal(type="funding", evidence="raised a Series B", source_url="list"),
+    ])
+    out = finalize(r, PAGES, TODAY, facts=facts)
+    assert [s.verified for s in out.signals] == [True, False]
+    assert out.why_now == "Raised a Series A in July 2026"
+
+
+def test_unsupported_headline_falls_back_to_evidence():
+    # the Resend/Retool case: raw page text as why-now; a supported headline replaces it, an invented one doesn't
+    pages = [Page(url="https://resend.com/careers", text="Open roles: Technical Account Executive, Customer Success Engineer")]
+    r = CompanyResearch(signals=[Signal(type="hiring", headline="Hiring a Technical Account Executive",
+                                        evidence="Technical Account Executive", source_url="https://resend.com/careers")])
+    assert finalize(r, pages, TODAY).why_now == "Hiring a Technical Account Executive"
+    r2 = CompanyResearch(signals=[Signal(type="hiring", headline="Doubling the sales team after record revenue",
+                                         evidence="Technical Account Executive", source_url="https://resend.com/careers")])
+    assert finalize(r2, pages, TODAY).why_now == "Technical Account Executive"
+
+
+def test_writer_rejects_copied_website_text():
+    # the Retool case
+    cfg = WriterConfig()
+    src = ["Work At Retool Join a small (but growing) team with outsized impact ... View all openings"]
+    line = "You're seeing the Work At Retool Join a small (but growing) team posting."
+    assert "copies website text word for word; say it in your own words" in problems(line, cfg, src)
+    assert problems("Saw you're hiring across teams at Retool while staying small.", cfg, src) == []
+    assert "uses banned phrase 'indicating'" in problems("You have a role open, indicating growth focus.", cfg)
+
+
+def test_numbers_and_rounds_must_match_exactly():
+    text = "Acme raised a $12M Series A in August 2026 and has 45 employees."
+    assert evidence_on_page("raised a $12M Series A", text)
+    assert not evidence_on_page("raised a $50M Series A", text)
+    assert not evidence_on_page("raised a $12M Series B", text)
+    assert evidence_on_page("raised a $12M Series-A", text)  # hyphen variant still matches

@@ -21,6 +21,8 @@ exclude = ["agencies and consultancies", "consumer apps", "companies over 500 em
 signal_priority = ["hiring", "funding", "leadership", "expansion", "launch", "product_update", "other"]
 # Companies scoring below this are left out of leads.csv (still listed in companies.csv).
 min_score = 6
+# Keep companies below min_score when neither size nor funding stage can be found (add list columns to fix).
+require_size_or_stage = true
 
 [writer]
 # What you sell. The line stays relevant to it without pitching.

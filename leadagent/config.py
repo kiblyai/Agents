@@ -28,6 +28,7 @@ DEFAULT_BANNED_PHRASES = [
     "amazing",
     "love what you",
     "leverage",
+    "indicating",
 ]
 
 
@@ -45,6 +46,8 @@ class ICP:
     signals: list[str] = field(default_factory=list)
     exclude: list[str] = field(default_factory=list)
     min_score: int = 6
+    # When the spec asks for a size or stage, companies where neither is known stay below min_score.
+    require_size_or_stage: bool = True
     # Which signal types make the best "why now", strongest first.
     signal_priority: list[str] = field(default_factory=lambda: [
         "hiring", "funding", "leadership", "expansion", "launch", "product_update", "other"])

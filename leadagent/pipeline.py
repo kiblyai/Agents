@@ -20,7 +20,7 @@ from .research import research_company
 from .writer import write_first_line
 
 # Bump when research or writing logic changes, so cached results from older logic are redone.
-CACHE_VERSION = "3"
+CACHE_VERSION = "4"
 
 
 def cache_key(icp: ICP) -> str:
@@ -28,7 +28,7 @@ def cache_key(icp: ICP) -> str:
 
 
 async def process_company(domain: str, name: str, *, icp: ICP, writer_cfg: WriterConfig, settings: Settings,
-                          llm, reader) -> CompanyResult:
+                          llm, reader, facts: dict[str, str] | None = None) -> CompanyResult:
     result = CompanyResult(domain=domain, input_name=name, icp_hash=cache_key(icp))
     pages = await reader.read(domain)
     result.pages = [p.url for p in pages]
@@ -36,7 +36,7 @@ async def process_company(domain: str, name: str, *, icp: ICP, writer_cfg: Write
         result.status = "unreachable"
         return result
     web_results = settings.web_results if settings.web_search else 0
-    research = await research_company(llm, icp, domain, pages, web_results=web_results)
+    research = await research_company(llm, icp, domain, pages, web_results=web_results, facts=facts)
     result.research = research
     if research.fits_icp and research.score >= icp.min_score:
         result.status = "qualified"
@@ -71,7 +71,7 @@ class RunReport:
     elapsed_s: float = 0.0
 
 
-async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterConfig, settings: Settings,
+async def run(companies: list[tuple], *, icp: ICP, writer_cfg: WriterConfig, settings: Settings,
               llm, reader, cache_dir: Path, limit: int | None = None,
               progress: Callable[[str], None] = print) -> RunReport:
     started = time.monotonic()
@@ -91,9 +91,10 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
         nonlocal done, busy_streak
         while not stop.is_set():
             try:
-                domain, name = queue.get_nowait()
+                domain, name, *rest = queue.get_nowait()
             except asyncio.QueueEmpty:
                 return
+            facts = rest[0] if rest else None
             cached = load_cached(cache_dir, domain, icp_hash)
             if cached is not None:
                 results[domain] = cached
@@ -101,7 +102,7 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
                 continue
             try:
                 res = await process_company(domain, name, icp=icp, writer_cfg=writer_cfg, settings=settings,
-                                            llm=llm, reader=reader)
+                                            llm=llm, reader=reader, facts=facts)
             except DailyLimitError as e:
                 report.stopped_reason = f"daily request limit reached; re-run tomorrow to continue ({str(e)[:120]})"
                 stop.set()
@@ -128,7 +129,7 @@ async def run(companies: list[tuple[str, str]], *, icp: ICP, writer_cfg: WriterC
             progress(f"[{done + report.from_cache}/{len(todo)}] {domain}: {res.status}{score}{why}{(' - ' + res.error) if res.error else ''}")
 
     await asyncio.gather(*(worker() for _ in range(max(1, settings.concurrency))))
-    report.results = [results[d] for d, _ in todo if d in results]
+    report.results = [results[item[0]] for item in todo if item[0] in results]
     report.elapsed_s = time.monotonic() - started
     return report
 

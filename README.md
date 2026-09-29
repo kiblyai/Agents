@@ -12,7 +12,8 @@ For each company in your CSV:
    - drops signals that cite pages it never read
    - marks a signal *verified* only if its evidence is actually on the cited page
    - flags anything dated more than 12 months ago as old news, not a reason to reach out now
-   - caps the score at 4 when any criterion is clearly not met
+   - caps the score at 4 when any criterion is clearly not met, or when the company is excluded, acquired or shut down
+   - requires numbers and funding rounds in the evidence to match the source exactly
    - builds the "why now" only from a verified, current signal
 4. **Writes one opening line** that speaks to the reader ("you"/"your") about one verified fact. It rejects placeholders, lines that are too short or too long, banned phrases and `!`, and retries once.
 5. **Matches contacts** from your CSV (for example an Apollo export) to your target titles.
@@ -70,6 +71,8 @@ python -m leadagent run --icp my_client.toml --companies companies.csv --out out
 
 - In the spec, `stages` sets the funding stages you want, and `[writer] offer` describes what you sell, so the opening line stays relevant without pitching.
 - `--companies` needs a column called `domain` or `website`. Optional contact columns: `First Name`, `Last Name`, `Title`, `Email`. Contacts can also come from a separate file via `--contacts`.
+- **Add company data columns if you have them.** Apollo-style exports include `# Employees`, `Latest Funding`, `Latest Funding Amount`, `Last Raised At`, `Total Funding`, `Industry` and `Company Country`. They are passed to the model as trusted data and can be cited as sources.
+  - Websites rarely state headcount or funding stage. So when the spec asks for a size or stage and neither can be found, the company is kept below `min_score` and flagged for a manual check. Set `require_size_or_stage = false` to turn this off.
 - `--model <id>` picks a model (default `openrouter/free`). `--web-search` adds OpenRouter web search for recent news. `--rpm` and `--concurrency` control speed.
 
 ## Limits and costs

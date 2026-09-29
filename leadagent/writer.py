@@ -14,15 +14,18 @@ SYSTEM = """You write the opening line of a cold email. The reader works at the 
 
 The line must:
 - address the reader directly ("you", "your team");
-- mention one specific fact from the verified facts below, and nothing that is not there;
+- mention one specific fact from the verified facts below, in your own words, and nothing that is not there;
+- connect that fact to the problem the sender solves, without naming the sender's offer;
 - not pitch, not ask a question, no greeting, no sign-off, no exclamation marks.
 
 Good lines:
-- Saw you're hiring an Account Executive and a Product Marketing Manager at the same time.
-- Your changelog shows two launches this month, including new controls for the coding agent.
+- Saw you're hiring a Technical Account Executive, which is usually when outbound pipeline becomes the bottleneck.
+- With two growth roles open at once, your team is probably building outbound from scratch.
 
 Bad lines (never write like these):
 - Your team can consider Acme as a partner.   <- talks about the company instead of to it
+- You're seeing the Work At Acme Join our team posting.   <- copies website text
+- You have an open role, indicating growth focus.   <- vague and robotic
 - ...   <- placeholder, not a sentence
 
 Reply with a JSON object whose only key is "line" and whose value is your sentence."""
@@ -30,7 +33,18 @@ Reply with a JSON object whose only key is "line" and whose value is your senten
 SECOND_PERSON = re.compile(r"\byou(?:'re|r|rs|'ve|'ll)?\b", re.I)
 
 
-def problems(line: str, cfg: WriterConfig) -> list[str]:
+def _tokens(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9']+", text.lower())
+
+
+def copies_source(line: str, sources: list[str], run: int = 6) -> bool:
+    """True if the line repeats `run` or more consecutive words from the page text (menus, headings, job ads)."""
+    words = _tokens(line)
+    haystack = " " + " ".join(_tokens(" ".join(sources))) + " "
+    return any(" " + " ".join(words[i:i + run]) + " " in haystack for i in range(len(words) - run + 1))
+
+
+def problems(line: str, cfg: WriterConfig, sources: list[str] | None = None) -> list[str]:
     issues = []
     stripped = line.strip()
     words = len(stripped.split())
@@ -52,12 +66,14 @@ def problems(line: str, cfg: WriterConfig) -> list[str]:
         issues.append("contains an exclamation mark")
     if re.search(r"[{}\[\]<>]", stripped):
         issues.append("contains template brackets")
+    if sources and copies_source(stripped, sources):
+        issues.append("copies website text word for word; say it in your own words")
     return issues
 
 
 def build_prompt(research: CompanyResearch, cfg: WriterConfig) -> str:
     usable = [s for s in research.signals if s.verified and not s.stale]
-    facts = [f"- {s.evidence}" + (f" ({s.date})" if s.date else "") for s in usable] or [f"- {research.summary}"]
+    facts = [f"- {s.headline or s.evidence}" + (f" ({s.date})" if s.date else "") for s in usable] or [f"- {research.summary}"]
     offer = (f"\nThe sender offers: {cfg.offer}. Pick the fact that makes that offer relevant, but do not mention the offer.\n"
              if cfg.offer else "")
     return (
@@ -72,12 +88,13 @@ def build_prompt(research: CompanyResearch, cfg: WriterConfig) -> str:
 async def write_first_line(llm, research: CompanyResearch, cfg: WriterConfig, model: str | None = None) -> tuple[str, str]:
     """Return (line, status) where status is 'ok' or 'needs_manual'."""
     prompt = build_prompt(research, cfg)
+    sources = [s.evidence for s in research.signals]
     result = await llm.complete_json(system=SYSTEM, user=prompt, schema=FirstLine, model=model, max_tokens=1000)
-    issues = problems(result.line, cfg)
+    issues = problems(result.line, cfg, sources)
     if not issues:
         return result.line.strip(), "ok"
     retry = prompt + f"\n\nYour previous line was: \"{result.line}\". Rewrite it to fix these problems: {'; '.join(issues)}."
     result = await llm.complete_json(system=SYSTEM, user=retry, schema=FirstLine, model=model, max_tokens=1000)
-    if problems(result.line, cfg):
+    if problems(result.line, cfg, sources):
         return result.line.strip(), "needs_manual"
     return result.line.strip(), "ok"

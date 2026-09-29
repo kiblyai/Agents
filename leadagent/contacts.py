@@ -27,8 +27,26 @@ def _get(row: dict, *names: str) -> str:
     return ""
 
 
-def load_companies(path: str | Path) -> list[tuple[str, str]]:
-    """Return [(domain, name)] in file order, de-duplicated by domain."""
+# Firmographic columns from data-provider exports (Apollo and similar), passed to the model as trusted LIST DATA.
+FACT_COLUMNS: dict[str, tuple[str, ...]] = {
+    "Employees": ("# employees", "employees", "employee count", "number of employees", "headcount", "company size"),
+    "Funding stage": ("latest funding", "funding stage", "latest funding round", "last funding round", "stage"),
+    "Latest funding amount": ("latest funding amount", "last funding amount"),
+    "Last raised": ("last raised at", "last funding date", "latest funding date"),
+    "Total funding": ("total funding", "total funding amount", "total raised"),
+    "Industry": ("industry",),
+    "Country": ("company country", "hq country", "country"),
+    "Founded": ("founded year", "founded"),
+    "Annual revenue": ("annual revenue", "revenue"),
+}
+
+
+def company_facts(row: dict) -> dict[str, str]:
+    return {label: v for label, names in FACT_COLUMNS.items() if (v := _get(row, *names))}
+
+
+def load_companies(path: str | Path) -> list[tuple[str, str, dict[str, str]]]:
+    """Return [(domain, name, facts)] in file order, de-duplicated by domain."""
     seen: set[str] = set()
     out = []
     with open(path, newline="", encoding="utf-8-sig") as f:
@@ -37,7 +55,7 @@ def load_companies(path: str | Path) -> list[tuple[str, str]]:
             if not domain or domain in seen:
                 continue
             seen.add(domain)
-            out.append((domain, _get(row, *NAME_COLUMNS)))
+            out.append((domain, _get(row, *NAME_COLUMNS), company_facts(row)))
     return out
 
 

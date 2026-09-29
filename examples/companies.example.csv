@@ -1,4 +1,4 @@
-Company,Website,First Name,Last Name,Title,Email
-Example Co,https://example.com,Jane,Doe,Head of Growth,jane@example.com
-Example Co,https://example.com,John,Roe,Engineer,john@example.com
-Another Example,example.org,,,,
+Company,Website,# Employees,Latest Funding,Last Raised At,Industry,Company Country,First Name,Last Name,Title,Email
+Example Co,https://example.com,45,Series A,2026-07-15,Computer Software,United States,Jane,Doe,Head of Growth,jane@example.com
+Example Co,https://example.com,45,Series A,2026-07-15,Computer Software,United States,John,Roe,Engineer,john@example.com
+Another Example,example.org,,,,,,,,,
