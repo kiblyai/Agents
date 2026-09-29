@@ -1,7 +1,7 @@
 [project]
 name = "leadagent"
 version = "0.1.0"
-description = "AI agents: lead research (leadagent) and security-questionnaire drafting (secq)."
+description = "AI agents: lead research (leadagent), security-questionnaire drafting (secq) and medical chronologies (medchron)."
 requires-python = ">=3.11"
 dependencies = [
     "openai>=1.40",
@@ -18,13 +18,14 @@ dev = ["pytest>=8"]
 [project.scripts]
 leadagent = "leadagent.__main__:main"
 secq = "secq.__main__:main"
+medchron = "medchron.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["agentkit", "leadagent", "secq"]
+packages = ["agentkit", "leadagent", "secq", "medchron"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,0 +1,383 @@
+{
+ "note": "Answer key for the synthetic case made by `python -m medchron sample`. Fictional patient.",
+ "patient": "Dana Whitfield",
+ "dob": "1986-08-02",
+ "doi": "2025-03-14",
+ "pages": 31,
+ "encounters": [
+  {
+   "date": "2024-06-10",
+   "provider": "Thomas Keller, DO",
+   "facility": "Keller Family Medicine",
+   "visit_type": "Office visit",
+   "icd": [
+    "M54.50"
+   ],
+   "pre_incident": true,
+   "pages": [
+    7
+   ]
+  },
+  {
+   "date": "2025-03-14",
+   "provider": "Priya Raman, MD",
+   "facility": "Maple Falls General Hospital",
+   "visit_type": "Emergency department visit",
+   "icd": [
+    "S13.4XXA",
+    "S16.1XXA",
+    "R51.9"
+   ],
+   "pre_incident": false,
+   "pages": [
+    2,
+    3
+   ],
+   "duplicate_pages": [
+    30,
+    31
+   ]
+  },
+  {
+   "date": "2025-03-14",
+   "provider": "Laura Benson, MD",
+   "facility": "Maple Falls General Hospital",
+   "visit_type": "CT cervical spine",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    4
+   ]
+  },
+  {
+   "date": "2025-03-20",
+   "provider": "Thomas Keller, DO",
+   "facility": "Keller Family Medicine",
+   "visit_type": "Office visit",
+   "icd": [
+    "S13.4XXA",
+    "S33.5XXA"
+   ],
+   "pre_incident": false,
+   "pages": [
+    8
+   ]
+  },
+  {
+   "date": "2025-03-24",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy evaluation",
+   "icd": [
+    "S13.4XXA",
+    "S33.5XXA"
+   ],
+   "pre_incident": false,
+   "pages": [
+    10,
+    11
+   ]
+  },
+  {
+   "date": "2025-03-27",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    12
+   ]
+  },
+  {
+   "date": "2025-03-31",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    13
+   ]
+  },
+  {
+   "date": "2025-04-03",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    14
+   ]
+  },
+  {
+   "date": "2025-04-07",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    16
+   ]
+  },
+  {
+   "date": "2025-04-10",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    17
+   ]
+  },
+  {
+   "date": "2025-04-14",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    18
+   ]
+  },
+  {
+   "date": "2025-04-15",
+   "provider": "Elena Vasquez, MD",
+   "facility": "Northside Orthopedic Associates",
+   "visit_type": "Orthopedic consultation",
+   "icd": [
+    "M54.12",
+    "S13.4XXA"
+   ],
+   "pre_incident": false,
+   "pages": [
+    21,
+    22
+   ]
+  },
+  {
+   "date": "2025-04-17",
+   "provider": "Mark Chen, PT, DPT",
+   "facility": "Maple Falls Physical Therapy",
+   "visit_type": "Physical therapy",
+   "icd": [],
+   "pre_incident": false,
+   "pages": [
+    19
+   ]
+  },
+  {
+   "date": "2025-04-22",
+   "provider": "Rafael Ortiz, MD",
+   "facility": "Clearview Imaging Center",
+   "visit_type": "MRI cervical spine",
+   "icd": [
+    "M50.222"
+   ],
+   "pre_incident": false,
+   "pages": [
+    25
+   ]
+  },
+  {
+   "date": "2025-06-18",
+   "provider": "Samuel Okafor, MD",
+   "facility": "Summit Pain and Spine",
+   "visit_type": "Epidural steroid injection",
+   "icd": [
+    "M50.222",
+    "M54.12"
+   ],
+   "pre_incident": false,
+   "pages": [
+    27,
+    28
+   ]
+  },
+  {
+   "date": "2025-07-09",
+   "provider": "Elena Vasquez, MD",
+   "facility": "Northside Orthopedic Associates",
+   "visit_type": "Orthopedic follow-up",
+   "icd": [
+    "M50.222",
+    "M54.12"
+   ],
+   "pre_incident": false,
+   "pages": [
+    23
+   ]
+  }
+ ],
+ "gaps": [
+  {
+   "start": "2025-04-22",
+   "end": "2025-06-18",
+   "days": 57
+  }
+ ],
+ "bills": [
+  {
+   "date": "2025-03-14",
+   "provider": "Maple Falls General Hospital",
+   "code": "99284",
+   "charge": 1450.0
+  },
+  {
+   "date": "2025-03-14",
+   "provider": "Maple Falls General Hospital",
+   "code": "72125",
+   "charge": 2180.0
+  },
+  {
+   "date": "2025-03-14",
+   "provider": "Maple Falls General Hospital",
+   "code": "96372",
+   "charge": 152.0
+  },
+  {
+   "date": "2025-03-14",
+   "provider": "Maple Falls General Hospital",
+   "code": "J1885",
+   "charge": 46.0
+  },
+  {
+   "date": "2025-03-20",
+   "provider": "Keller Family Medicine",
+   "code": "99214",
+   "charge": 245.0
+  },
+  {
+   "date": "2025-03-24",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97161",
+   "charge": 210.0
+  },
+  {
+   "date": "2025-03-27",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-03-27",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-03-31",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-03-31",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-03",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-04-03",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-07",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-04-07",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-10",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-04-10",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-14",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-04-14",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-17",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97110",
+   "charge": 190.0
+  },
+  {
+   "date": "2025-04-17",
+   "provider": "Maple Falls Physical Therapy",
+   "code": "97140",
+   "charge": 85.0
+  },
+  {
+   "date": "2025-04-22",
+   "provider": "Clearview Imaging Center",
+   "code": "72141",
+   "charge": 1875.0
+  },
+  {
+   "date": "2025-04-15",
+   "provider": "Northside Orthopedic Associates",
+   "code": "99204",
+   "charge": 425.0
+  },
+  {
+   "date": "2025-07-09",
+   "provider": "Northside Orthopedic Associates",
+   "code": "99213",
+   "charge": 180.0
+  },
+  {
+   "date": "2025-06-18",
+   "provider": "Summit Pain and Spine",
+   "code": "62321",
+   "charge": 3200.0
+  },
+  {
+   "date": "2025-06-18",
+   "provider": "Summit Pain and Spine",
+   "code": "J1100",
+   "charge": 40.0
+  }
+ ],
+ "total_billed": 11928.0,
+ "no_content_pages": [
+  1,
+  6
+ ],
+ "other_patient_pages": [
+  15
+ ]
+}
