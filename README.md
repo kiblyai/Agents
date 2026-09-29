@@ -28,9 +28,16 @@ Researched companies are cached in `out/cache/`. Re-running skips them, so an in
 
 ```bash
 pip install -e ".[dev]"
-export OPENROUTER_API_KEY=sk-or-...     # from openrouter.ai/keys
 python -m leadagent check               # one tiny request to confirm key and model
 ```
+
+API keys live only in environment variables, never in code, specs or output files. Set `OPENROUTER_API_KEY` (from openrouter.ai/keys) in one of these places:
+
+- **Your shell:** `export OPENROUTER_API_KEY=...`
+- **A local `.env` file:** copy `.env.example` to `.env`. `.env` is git-ignored and loaded at startup.
+- **Your hosting or cloud-environment settings,** as an environment variable.
+
+A variable already set in the environment always wins over `.env`. The key is never printed or saved in `out/`.
 
 ## Run
 

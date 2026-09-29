@@ -86,6 +86,34 @@ def load_spec(path: str | Path) -> tuple[ICP, WriterConfig]:
     return icp, writer
 
 
+def load_dotenv(path: str | Path = ".env") -> list[str]:
+    """Load KEY=VALUE lines from a local .env file into the environment.
+
+    Variables already set in the environment win, so keys set in your shell or hosting settings are never
+    overridden. Returns the names loaded (never the values). The .env file is git-ignored.
+    """
+    path = Path(path)
+    if not path.is_file():
+        return []
+    loaded = []
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        if line.startswith("export "):
+            line = line[len("export "):]
+        key, _, value = line.partition("=")
+        key, value = key.strip(), value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "'\"":
+            value = value[1:-1]
+        elif " #" in value:
+            value = value.split(" #", 1)[0].rstrip()
+        if key and value and key not in os.environ:
+            os.environ[key] = value
+            loaded.append(key)
+    return loaded
+
+
 def _env_bool(name: str, default: bool) -> bool:
     v = os.environ.get(name)
     if v is None:
@@ -95,7 +123,7 @@ def _env_bool(name: str, default: bool) -> bool:
 
 @dataclass
 class Settings:
-    api_key: str = ""
+    api_key: str = field(default="", repr=False)  # read from OPENROUTER_API_KEY only; never printed
     base_url: str = "https://openrouter.ai/api/v1"
     model: str = "openrouter/free"  # routes to an available free model; set a paid model for client work
     writer_model: str = ""  # empty = same as model

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
-from .config import Settings, load_spec
+from .config import Settings, load_dotenv, load_spec
 from .contacts import SyntaxOnlyVerifier, load_companies, load_contacts
 from .fetch import SiteReader
 from .llm import LLM
@@ -25,7 +25,7 @@ def _settings(args) -> Settings:
     s = Settings.from_env(model=args.model, rpm=args.rpm, concurrency=args.concurrency,
                           web_search=True if args.web_search else None, max_pages=args.max_pages)
     if not s.api_key:
-        sys.exit("Set OPENROUTER_API_KEY first (see README.md).")
+        sys.exit("OPENROUTER_API_KEY is not set. Put it in your environment or a local .env file (see README.md).")
     return s
 
 
@@ -86,6 +86,7 @@ def main(argv: list[str] | None = None) -> None:
     common(c)
 
     args = p.parse_args(argv)
+    load_dotenv()  # keys stay in the environment; .env is optional and git-ignored
     asyncio.run(_run(args) if args.cmd == "run" else _check(args))
 
 

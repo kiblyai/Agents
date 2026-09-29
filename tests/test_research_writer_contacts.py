@@ -85,3 +85,20 @@ def test_syntax_verifier():
 
 def test_contact_full_name():
     assert Contact(domain="a.com", first_name="Ana", last_name="Lee").full_name == "Ana Lee"
+
+
+def test_load_dotenv_never_overrides_existing_env(tmp_path, monkeypatch):
+    from leadagent.config import Settings, load_dotenv
+
+    env = tmp_path / ".env"
+    env.write_text('# comment\nexport OPENROUTER_API_KEY="sk-or-file"\nLEADAGENT_MODEL=paid/model  # note\n'
+                   "LEADAGENT_RPM=\nnot a line\n")
+    for name in ("OPENROUTER_API_KEY", "LEADAGENT_RPM"):  # set-then-delete so pytest restores them afterwards
+        monkeypatch.setenv(name, "placeholder")
+        monkeypatch.delenv(name)
+    monkeypatch.setenv("LEADAGENT_MODEL", "from/shell")
+    assert load_dotenv(env) == ["OPENROUTER_API_KEY"]
+    s = Settings.from_env()
+    assert s.api_key == "sk-or-file" and s.model == "from/shell" and s.rpm == 18.0
+    assert "sk-or-file" not in repr(s)
+    assert load_dotenv(tmp_path / "missing.env") == []
