@@ -66,7 +66,14 @@ async def _models(args) -> None:
     print(f"\n{len(rows)} models. Pin one with LEADAGENT_MODEL=<id> in .env; prefer json=yes.")
 
 
+def _require_files(*paths: str | None) -> None:
+    missing = [p for p in paths if p and not Path(p).is_file()]
+    if missing:
+        sys.exit("File not found: " + ", ".join(missing) + f"\n(current folder: {Path.cwd()})")
+
+
 async def _run(args) -> None:
+    _require_files(args.icp, args.companies, args.contacts)
     s = _settings(args)
     icp, writer_cfg = load_spec(args.icp)
     companies = load_companies(args.companies)
