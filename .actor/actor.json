@@ -1,0 +1,26 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "ai-lead-scorer",
+    "title": "AI Lead Scorer with Cited Buying Signals",
+    "description": "Scores company websites against your ideal customer, 0-10, quoting the page behind every signal (hiring, funding, launches), and writes an opening line for each fit. Pay only for companies scored.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "readme": "../leadactor/STORE.md",
+    "dockerfile": "./Dockerfile",
+    "dockerContextDir": "../",
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "minMemoryMbytes": 256,
+    "defaultMemoryMbytes": 512,
+    "maxMemoryMbytes": 1024,
+    "environmentVariables": {
+        "OPENROUTER_API_KEY": "@openrouterApiKey",
+        "LEADACTOR_MODEL": "@leadactorModel",
+        "LEADAGENT_RPM": "60",
+        "LEADAGENT_CONCURRENCY": "6"
+    }
+}

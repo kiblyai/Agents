@@ -1,0 +1,14 @@
+# Left out when `apify push` uploads this folder (it also skips everything in .gitignore).
+# The Actor needs only .actor/, agentkit/, leadagent/ and leadactor/.
+analysis/
+examples/
+medchron/
+secq/
+tests/
+.venv/
+out/
+storage/
+/CLAUDE.md
+/README.md
+/.env.example
+/pyproject.toml

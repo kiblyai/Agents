@@ -15,16 +15,17 @@ AI-agent service businesses for a solo founder, built one agent at a time. Busin
 | `leadagent/` | **Parked.** Company list in, scored and cited leads with opening lines out. Tuned over 3 real runs. | Test on about 20 real Apollo prospects; see `leadagent/README.md` |
 | `secq/` | **Active.** Security-questionnaire drafting with citations and review flags. Tested on the fictional example with a stand-in model only. | Founder runs the example on their Mac and sends `review.csv` plus the draft xlsx; check answer quality, then fix |
 | `medchron/` | **Active.** Medical chronology for personal-injury firms: PDFs in, cited chronology (Word), gaps, bills, review queue and a bookmarked combined PDF out. Tested offline on the synthetic case with a stand-in model only. | Founder runs the synthetic case on their Mac (`--synthetic`, free model) and sends the `score` output plus `review.csv`; check extraction quality, then fix |
+| `leadactor/` | **Active.** leadagent as a pay-per-event Apify Store Actor (idea #4). Apify files in `.actor/`. Charges one `company-scored` event per scored company; unreachable sites and bad input are free. Tested offline only, with a stand-in model and the real Apify SDK billing locally. | Founder runs the example with a paid model (`leadactor/README.md` step 2) and sends the cost line plus `results.csv`; then publishes (step 3) |
 | `examples/` | Sample inputs: a fictional company ("Northwind Analytics") for secq, and a fictional patient's case file with an answer key (`examples/medchron/truth.json`) for medchron. Regenerate the medchron case with `python -m medchron sample`, never by hand (a test compares them). | none |
 | `tests/` | Run offline with fakes (`tests/fakes.py`): `python -m pytest -q` | none |
 
 ## Rules we agreed
 - **Keys:** `OPENROUTER_API_KEY` lives in environment variables or the git-ignored `.env`. Never write it to code, specs, output or chat. The founder once pasted a key into `.env.example` on GitHub; secret scanning blocked the commit. Watch for this.
-- **Models (via OpenRouter):** main `nvidia/nemotron-3-super-120b-a12b:free`, backup `google/gemma-4-31b-it:free`. Free models are shared and often busy, capped at 20 requests/min and 50/day (1,000/day after $10 of credit). Both agents stop cleanly at the daily limit and resume from cache.
+- **Models (via OpenRouter):** main `nvidia/nemotron-3-super-120b-a12b:free`, backup `google/gemma-4-31b-it:free`. Free models are shared and often busy, capped at 20 requests/min and 50/day (1,000/day after $10 of credit). The agents stop cleanly at the daily limit and resume from cache. Paid Apify runs (leadactor) refuse free models.
 - **Privacy:** free models may log prompts. Use them only with public or example data, never a client's real documents. For client work, use a paid model with zero data retention.
 - **Medical records (medchron):** real records are HIPAA-protected. Only synthetic records until the founder has a BAA with the model provider (`analysis/PLAN.md` 3.3 step 1). The code enforces it: a run needs `--synthetic`, or a paid model plus `MEDCHRON_BAA=yes`. Never weaken this check.
 - **Checks in code:** the model drafts, and code checks citations, numbers, dates and hard criteria. When a real run shows a bad output, add a regression test named after the real case (e.g. "the Supabase case") and fix the code.
-- **Git:** develop on `claude/determined-brown-576j98`. Bump `CACHE_VERSION` in an agent's `pipeline.py` when its research or drafting logic changes.
+- **Git:** develop on the branch the session names. Bump `CACHE_VERSION` in an agent's `pipeline.py` when its research or drafting logic changes.
 
 ## Founder's machine (they run everything locally and paste results back)
 - Mac mini, zsh, repo at `~/Agents`, venv at `.venv`, Python 3.12 from Homebrew.

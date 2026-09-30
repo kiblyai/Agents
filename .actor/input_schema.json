@@ -1,0 +1,132 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "AI Lead Scorer",
+    "description": "List company websites and describe who you sell to. Each website is read, scored 0-10 against your description with quoted, linked evidence, and each company that fits gets an opening line for a cold email. You pay only for companies whose website could be read and scored.",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "websites": {
+            "title": "Company websites",
+            "type": "array",
+            "editor": "stringList",
+            "description": "One domain or URL per line, e.g. acme.com. Duplicates are removed.",
+            "prefill": ["apify.com", "clay.com", "instantly.ai"],
+            "sectionCaption": "Companies to score"
+        },
+        "datasetId": {
+            "title": "Or a dataset from another Actor run",
+            "type": "string",
+            "editor": "resourcePicker",
+            "resourceType": "dataset",
+            "description": "Scores the website (or domain, or url) of every item, e.g. results from Google Maps Scraper or a company-list Actor. Employee count, industry, country and funding fields are used as facts."
+        },
+        "idealCustomer": {
+            "title": "Who you sell to",
+            "type": "string",
+            "editor": "textarea",
+            "description": "Describe your ideal customer in plain words: what they do, who they sell to, and what makes them need you now.",
+            "prefill": "B2B software companies that sell to sales, marketing or growth teams and are hiring or have recently raised money, so they will soon need more pipeline.",
+            "sectionCaption": "Your ideal customer"
+        },
+        "industries": {
+            "title": "Industries",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Optional, e.g. B2B SaaS, fintech. Companies clearly outside these score 4 or less."
+        },
+        "minEmployees": {
+            "title": "Minimum employees",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 1,
+            "description": "Optional. Websites rarely state headcount; see 'Hold back unknown size or stage'."
+        },
+        "maxEmployees": {
+            "title": "Maximum employees",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 1,
+            "description": "Optional."
+        },
+        "fundingStages": {
+            "title": "Funding stages",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Optional, e.g. Seed, Series A."
+        },
+        "countries": {
+            "title": "Countries or regions",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Optional, e.g. United States, United Kingdom."
+        },
+        "buyingSignals": {
+            "title": "Reasons to reach out now",
+            "type": "array",
+            "editor": "stringList",
+            "description": "What makes a company worth contacting now. Each one found is quoted from the page it came from, with its date.",
+            "default": [
+                "hiring sales, marketing or growth roles",
+                "raised funding in the last 12 months",
+                "launched a new product or entered a new market",
+                "new sales or marketing leader"
+            ]
+        },
+        "exclude": {
+            "title": "Exclude",
+            "type": "array",
+            "editor": "stringList",
+            "description": "Optional, e.g. agencies, consumer apps. Excluded companies score 4 or less."
+        },
+        "minScore": {
+            "title": "Minimum score to qualify",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "default": 6,
+            "description": "Companies at or above this score (and judged a fit) are marked qualified and get an opening line."
+        },
+        "requireSizeOrStage": {
+            "title": "Hold back unknown size or stage",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": true,
+            "description": "When you set employees or funding stages and neither can be found, the company stays one point below the minimum score, marked for a manual check. A dataset with employee counts avoids this."
+        },
+        "offer": {
+            "title": "What you sell",
+            "type": "string",
+            "editor": "textfield",
+            "description": "Optional, one line, e.g. 'researched lead lists for new growth teams'. Opening lines stay relevant to it without pitching.",
+            "sectionCaption": "Opening lines"
+        },
+        "writeOpeningLines": {
+            "title": "Write opening lines",
+            "type": "boolean",
+            "editor": "checkbox",
+            "default": true,
+            "description": "One line per qualified company, about one verified fact, checked for length, banned phrases and copied text."
+        },
+        "maxCompanies": {
+            "title": "Max companies",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 1,
+            "maximum": 10000,
+            "default": 100,
+            "description": "Only the first this many companies are scored.",
+            "sectionCaption": "Limits"
+        },
+        "maxPagesPerCompany": {
+            "title": "Pages read per company",
+            "type": "integer",
+            "editor": "number",
+            "minimum": 1,
+            "maximum": 6,
+            "default": 4,
+            "description": "The homepage plus careers, news, about and customer pages when linked."
+        }
+    },
+    "required": ["idealCustomer"]
+}

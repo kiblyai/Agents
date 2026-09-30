@@ -1,0 +1,16 @@
+{
+  "websites": [
+    "clay.com",
+    "instantly.ai",
+    "lemlist.com",
+    "attio.com",
+    "greggs.co.uk",
+    "this-company-does-not-exist-4821.com",
+    "linkedin.com/company/clay-hq"
+  ],
+  "idealCustomer": "B2B software companies with 10-500 employees that sell to sales, marketing or growth teams and are hiring or have recently raised money, so they will soon need more pipeline.",
+  "industries": ["B2B SaaS", "sales and marketing software"],
+  "exclude": ["agencies and consultancies", "consumer brands", "retailers"],
+  "offer": "researched outbound lead lists for growth teams",
+  "maxCompanies": 10
+}

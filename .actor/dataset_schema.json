@@ -1,0 +1,47 @@
+{
+    "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+    "actorSpecification": 1,
+    "fields": {},
+    "views": {
+        "overview": {
+            "title": "Leads",
+            "description": "One row per company scored (one charge each).",
+            "transformation": {
+                "fields": ["website", "companyName", "qualified", "score", "whyNow", "openingLine", "summary"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "website": {"label": "Website", "format": "text"},
+                    "companyName": {"label": "Company", "format": "text"},
+                    "qualified": {"label": "Qualified", "format": "boolean"},
+                    "score": {"label": "Score (0-10)", "format": "number"},
+                    "whyNow": {"label": "Why now", "format": "text"},
+                    "openingLine": {"label": "Opening line", "format": "text"},
+                    "summary": {"label": "What they do", "format": "text"}
+                }
+            }
+        },
+        "evidence": {
+            "title": "Evidence",
+            "description": "Why each company got its score, with the pages the evidence came from.",
+            "transformation": {
+                "fields": ["website", "score", "scoreReasons", "criteria", "signals", "whyNowSource", "disqualifiers", "pagesRead", "openingLineStatus"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "website": {"label": "Website", "format": "text"},
+                    "score": {"label": "Score", "format": "number"},
+                    "scoreReasons": {"label": "Score reasons", "format": "array"},
+                    "criteria": {"label": "Criteria", "format": "array"},
+                    "signals": {"label": "Signals (verified on the page)", "format": "array"},
+                    "whyNowSource": {"label": "Why-now source", "format": "link"},
+                    "disqualifiers": {"label": "Disqualifiers", "format": "array"},
+                    "pagesRead": {"label": "Pages read", "format": "array"},
+                    "openingLineStatus": {"label": "Opening line check", "format": "text"}
+                }
+            }
+        }
+    }
+}
