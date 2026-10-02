@@ -1,0 +1,5 @@
+# Installed in the Apify image (.actor/Dockerfile). Keep in step with pyproject.toml.
+apify>=4,<5
+openai>=1.40
+httpx>=0.27
+pydantic>=2.6
