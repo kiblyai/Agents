@@ -11,7 +11,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from .extract import name_tokens
-from .pdfgen import text_pdf, wrap_page
+from agentkit.pdfgen import text_pdf, wrap_page
 
 PATIENT = "Dana Whitfield"
 DOB = date(1986, 8, 2)

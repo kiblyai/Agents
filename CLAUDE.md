@@ -11,11 +11,12 @@ AI-agent service businesses for a solo founder, built one agent at a time. Busin
 ## Layout and status
 | Folder | Status | Next step |
 |---|---|---|
-| `agentkit/` | Shared: OpenRouter model client (rate limit, retries, backup models, JSON repair, daily-limit stop) and `.env` loading | none |
+| `agentkit/` | Shared: OpenRouter model client (rate limit, retries, backup models, JSON repair, daily-limit stop), `.env` loading and a small PDF writer for synthetic examples | none |
 | `leadagent/` | **Parked.** Company list in, scored and cited leads with opening lines out. Tuned over 3 real runs. | Test on about 20 real Apollo prospects; see `leadagent/README.md` |
 | `secq/` | **Active.** Security-questionnaire drafting with citations and review flags. Tested on the fictional example with a stand-in model only. | Founder runs the example on their Mac and sends `review.csv` plus the draft xlsx; check answer quality, then fix |
 | `medchron/` | **Active.** Medical chronology for personal-injury firms: PDFs in, cited chronology (Word), gaps, bills, review queue and a bookmarked combined PDF out. Tested offline on the synthetic case with a stand-in model only. | Founder runs the synthetic case on their Mac (`--synthetic`, free model) and sends the `score` output plus `review.csv`; check extraction quality, then fix |
-| `examples/` | Sample inputs: a fictional company ("Northwind Analytics") for secq, and a fictional patient's case file with an answer key (`examples/medchron/truth.json`) for medchron. Regenerate the medchron case with `python -m medchron sample`, never by hand (a test compares them). | none |
+| `freightq/` | **Active.** Freight-broker quotes (idea #6): shipper emails (.eml/.txt, PDF tenders) in; checked lanes, prices from the broker's own lane history (code only), draft replies, `review.csv` and TMS rows for tenders out. Tested offline on the synthetic inbox with a stand-in model only. | Founder runs the synthetic inbox on their Mac (free model) and sends the `score` output plus `review.csv`; check extraction quality, then fix |
+| `examples/` | Sample inputs: a fictional company ("Northwind Analytics") for secq, and a fictional patient's case file with an answer key (`examples/medchron/truth.json`) for medchron. A fictional brokerage inbox with lane history and an answer key for freightq (`examples/freightq/truth.json`). Regenerate the medchron case and the freightq inbox with `python -m medchron sample` and `python -m freightq sample`, never by hand (tests compare them). | none |
 | `tests/` | Run offline with fakes (`tests/fakes.py`): `python -m pytest -q` | none |
 
 ## Rules we agreed

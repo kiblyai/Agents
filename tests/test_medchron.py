@@ -156,7 +156,7 @@ def test_batches_stay_within_a_file_and_skip_scanned_pages():
 
 
 def test_scanned_pages_are_listed_for_ocr_in_one_review_row(tmp_path):
-    from medchron.pdfgen import text_pdf
+    from agentkit.pdfgen import text_pdf
 
     (tmp_path / "scan.pdf").write_bytes(text_pdf([["x"], [], [], ["Patient: Dana Whitfield " * 3]]))
     case = read_case(tmp_path)

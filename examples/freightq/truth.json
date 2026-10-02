@@ -1,0 +1,487 @@
+{
+ "note": "Answer key for the synthetic inbox made by `python -m freightq sample`. Fictional companies.",
+ "emails": [
+  {
+   "file": "01_wwi_dallas_atlanta.eml",
+   "kind": "quote_request",
+   "customer": "Wide World Importers",
+   "contact": "Maria Lopez",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Dallas",
+      "state": "TX",
+      "zip": "75207"
+     },
+     "destination": {
+      "city": "Atlanta",
+      "state": "GA",
+      "zip": "30318"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-24",
+     "pickup_time": "8am-2pm",
+     "delivery_date": "2026-09-28",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 38500,
+     "commodity": "packaged housewares",
+     "pieces": "22 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 2225,
+     "flags": []
+    }
+   ]
+  },
+  {
+   "file": "02_contoso_fresno_denver.eml",
+   "kind": "quote_request",
+   "customer": "Contoso Foods",
+   "contact": "Jin Park",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Fresno",
+      "state": "CA",
+      "zip": "93725"
+     },
+     "destination": {
+      "city": "Denver",
+      "state": "CO",
+      "zip": "80216"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-22",
+     "pickup_time": "",
+     "delivery_date": "2026-09-24",
+     "delivery_time": "by 6am",
+     "equipment": "reefer",
+     "weight_lbs": 40000,
+     "commodity": "fresh grapes",
+     "pieces": "20 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [
+      "temperature"
+     ],
+     "total": 3775,
+     "flags": []
+    }
+   ]
+  },
+  {
+   "file": "03_fabrikam_flatbed.eml",
+   "kind": "quote_request",
+   "customer": "Fabrikam Building Supply",
+   "contact": "Dana Brooks",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Birmingham",
+      "state": "AL",
+      "zip": "35203"
+     },
+     "destination": {
+      "city": "Houston",
+      "state": "TX",
+      "zip": "77029"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-28",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "flatbed",
+     "weight_lbs": 46000,
+     "commodity": "rebar",
+     "pieces": "12 bundles",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [
+      "tarps"
+     ],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 2150,
+     "flags": []
+    }
+   ]
+  },
+  {
+   "file": "04_tailspin_three_lanes.eml",
+   "kind": "quote_request",
+   "customer": "Tailspin Toys",
+   "contact": "Priya Shah",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38118"
+     },
+     "destination": {
+      "city": "Chicago",
+      "state": "IL",
+      "zip": "60632"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-29",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 31000,
+     "commodity": "boxed toys",
+     "pieces": "24 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 1600,
+     "flags": []
+    },
+    {
+     "origin": {
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38118"
+     },
+     "destination": {
+      "city": "Columbus",
+      "state": "OH",
+      "zip": "43207"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-29",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 35200,
+     "commodity": "boxed toys",
+     "pieces": "26 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 1800,
+     "flags": [
+      "nearby_zips"
+     ]
+    },
+    {
+     "origin": {
+      "city": "Memphis",
+      "state": "TN",
+      "zip": "38118"
+     },
+     "destination": {
+      "city": "Kansas City",
+      "state": "MO",
+      "zip": "64120"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-29",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 22400,
+     "commodity": "boxed toys",
+     "pieces": "18 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": null,
+     "flags": [
+      "state_history_only"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "05_adventure_tender.eml",
+   "kind": "tender",
+   "customer": "Adventure Works Cycles",
+   "contact": "Chris Novak",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Joliet",
+      "state": "IL",
+      "zip": "60436"
+     },
+     "destination": {
+      "city": "Nashville",
+      "state": "TN",
+      "zip": "37210"
+     },
+     "stops": [
+      {
+       "city": "Louisville",
+       "state": "KY",
+       "zip": "40218"
+      }
+     ],
+     "pickup_date": "2026-09-24",
+     "pickup_time": "08:00",
+     "delivery_date": "2026-09-25",
+     "delivery_time": "13:00",
+     "equipment": "van",
+     "weight_lbs": 29750,
+     "commodity": "boxed bicycles",
+     "pieces": "18 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [
+      "88213",
+      "PO 4471-A",
+      "PO 4472-B"
+     ],
+     "rate": 1850,
+     "truckloads": 1,
+     "missing": [],
+     "total": 1850,
+     "flags": []
+    }
+   ]
+  },
+  {
+   "file": "06_wwi_savannah_charlotte.eml",
+   "kind": "quote_request",
+   "customer": "Wide World Importers",
+   "contact": "Maria Lopez",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Savannah",
+      "state": "GA",
+      "zip": "31408"
+     },
+     "destination": {
+      "city": "Charlotte",
+      "state": "NC",
+      "zip": "28206"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-25",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 47500,
+     "commodity": "ceramic tile",
+     "pieces": "",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 1275,
+     "flags": [
+      "overweight"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "07_contoso_thread.eml",
+   "kind": "quote_request",
+   "customer": "Contoso Foods",
+   "contact": "Jin Park",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Salinas",
+      "state": "CA",
+      "zip": "93901"
+     },
+     "destination": {
+      "city": "Tempe",
+      "state": "AZ",
+      "zip": "85281"
+     },
+     "stops": [],
+     "pickup_date": "2026-10-01",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "reefer",
+     "weight_lbs": 36000,
+     "commodity": "bagged salad",
+     "pieces": "20 pallets",
+     "temperature": "34F continuous",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 2,
+     "missing": [],
+     "total": 2775,
+     "flags": [
+      "nearby_zips"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "08_proseware_hazmat.eml",
+   "kind": "quote_request",
+   "customer": "Proseware Chemical",
+   "contact": "Omar Haddad",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Houston",
+      "state": "TX",
+      "zip": "77015"
+     },
+     "destination": {
+      "city": "Little Rock",
+      "state": "AR",
+      "zip": "72206"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-28",
+     "pickup_time": "",
+     "delivery_date": "2026-09-29",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 36000,
+     "commodity": "paint",
+     "pieces": "64 drums on 16 pallets",
+     "temperature": "",
+     "hazmat": true,
+     "requirements": [
+      "TWIC card"
+     ],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [],
+     "total": 1475,
+     "flags": [
+      "hazmat"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "09_carrier_capacity.eml",
+   "kind": "other",
+   "customer": "Consolidated Messenger Trucking",
+   "contact": "Luis Ortega",
+   "shipments": []
+  },
+  {
+   "file": "10_adventure_small.eml",
+   "kind": "quote_request",
+   "customer": "Adventure Works Cycles",
+   "contact": "Chris Novak",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Joliet",
+      "state": "IL",
+      "zip": "60436"
+     },
+     "destination": {
+      "city": "Detroit",
+      "state": "MI",
+      "zip": "48210"
+     },
+     "stops": [],
+     "pickup_date": "2026-09-25",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "",
+     "weight_lbs": 1800,
+     "commodity": "bike parts",
+     "pieces": "3 pallets",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [
+      "liftgate at delivery"
+     ],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [
+      "equipment"
+     ],
+     "total": null,
+     "flags": [
+      "small_shipment"
+     ]
+    }
+   ]
+  },
+  {
+   "file": "11_alpine_phoenix.txt",
+   "kind": "quote_request",
+   "customer": "Alpine Ski House",
+   "contact": "Sam Rivera",
+   "shipments": [
+    {
+     "origin": {
+      "city": "Phoenix",
+      "state": "AZ",
+      "zip": ""
+     },
+     "destination": {
+      "city": "",
+      "state": "",
+      "zip": ""
+     },
+     "stops": [],
+     "pickup_date": "",
+     "pickup_time": "",
+     "delivery_date": "",
+     "delivery_time": "",
+     "equipment": "van",
+     "weight_lbs": 42000,
+     "commodity": "ski racks",
+     "pieces": "",
+     "temperature": "",
+     "hazmat": false,
+     "requirements": [],
+     "references": [],
+     "rate": null,
+     "truckloads": 1,
+     "missing": [
+      "destination",
+      "pickup_date"
+     ],
+     "total": null,
+     "flags": []
+    }
+   ]
+  }
+ ]
+}
