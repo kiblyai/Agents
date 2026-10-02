@@ -11,11 +11,11 @@ from typing import Callable
 from agentkit.llm import DailyLimitError
 
 from .docs import KnowledgeBase
-from .draft import SYSTEM, DraftBatch, DraftResult, Evidence, build_prompt, check, missing_result
+from .draft import SYSTEM, DraftBatch, DraftResult, Evidence, build_prompt, check, missing_result, overlap
 from .search import BM25
 from .sheet import Question
 
-CACHE_VERSION = "1"
+CACHE_VERSION = "2"
 
 
 @dataclass
@@ -48,7 +48,8 @@ def gather_evidence(questions: list[Question], kb: KnowledgeBase, opts: Options)
             hits = l_index.top(q.text, opts.library_k)
             best = hits[0][1] if hits else 0
             for rank, (i, score) in enumerate(hits, 1):
-                if score >= 0.5 * best:  # only close matches
+                # only close matches: the model is told to reuse their wording, so "customer data" alone is not enough
+                if score >= 0.5 * best and overlap(q.text, kb.library[i].question) >= 0.5:
                     ev.library[f"L{n}-{rank}"] = kb.library[i]
         out.append(ev)
     return out
@@ -85,7 +86,7 @@ async def draft_all(questions: list[Question], kb: KnowledgeBase, opts: Options,
                 drafted = await llm.complete_json(system=system, user=prompt, schema=DraftBatch, max_tokens=opts.max_tokens)
                 path.write_text(drafted.model_dump_json(indent=1))
             except DailyLimitError as e:
-                run.stopped_reason = f"daily request limit reached; re-run tomorrow to continue ({str(e)[:100]})"
+                run.stopped_reason = f"daily request limit reached; re-run after it resets to continue. Provider says: {str(e)[:300]}"
                 run.results += [missing_result(q, "not processed yet: re-run to continue") for _, q, _ in batch]
                 continue
             except Exception as e:  # one bad batch must not sink the questionnaire

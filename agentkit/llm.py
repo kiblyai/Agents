@@ -7,6 +7,7 @@ import json
 import re
 import time
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from typing import Awaitable, Callable, TypeVar
 
 import openai
@@ -19,6 +20,23 @@ RETRYABLE = (openai.RateLimitError, openai.APITimeoutError, openai.APIConnection
 
 class DailyLimitError(RuntimeError):
     """The provider's daily request cap is exhausted; retrying today is pointless."""
+
+
+def limit_message(e: Exception) -> str:
+    """The provider's own words for a rate-limit error, plus when the limit resets if the provider says."""
+    body = getattr(e, "body", None)
+    if not isinstance(body, dict):
+        return str(e)
+    msg = str(body.get("message") or e)
+    meta = body.get("metadata")
+    headers = meta.get("headers") if isinstance(meta, dict) else None
+    reset = headers.get("X-RateLimit-Reset") if isinstance(headers, dict) else None
+    try:
+        when = datetime.fromtimestamp(int(reset) / 1000, timezone.utc)  # OpenRouter sends milliseconds
+        msg += f" (resets {when:%Y-%m-%d %H:%M} UTC)"
+    except (TypeError, ValueError, OverflowError, OSError):
+        pass
+    return msg
 
 
 class LLMOutputError(RuntimeError):
@@ -132,7 +150,7 @@ class LLM:
             except openai.RateLimitError as e:
                 self.usage.failed_attempts += 1
                 if re.search(r"per[- ]day|daily", str(e), re.I):
-                    raise DailyLimitError(str(e)) from e
+                    raise DailyLimitError(limit_message(e)) from e
                 if attempt == self.max_retries:
                     raise
                 self.usage.retries += 1

@@ -130,7 +130,9 @@ def build_prompt(items: list[tuple[str, Question, Evidence]]) -> str:
 def _unsupported(text: str, cited: str) -> list[str]:
     """Numbers and security claims in the answer that the cited sources do not contain."""
     said, src = normalize(text), normalize(cited)
-    missing = [n for n in re.findall(r"\d+(?:\.\d+)?", said) if n not in src]
+    # whole numbers only: "3" is not backed by "35 days", nor "5" by "AES-256"
+    missing = [n for n in re.findall(r"\d+(?:\.\d+)?", said)
+               if not re.search(rf"(?<![\d.]){re.escape(n)}(?!\d|\.\d)", src)]
     missing += [t for t in CLAIM_TERMS if re.search(rf"\b{re.escape(t)}", said) and not re.search(rf"\b{re.escape(t)}", src)]
     return list(dict.fromkeys(missing))
 
@@ -145,11 +147,17 @@ def _stem(w: str) -> str:
     return w[:5] if len(w) >= 5 else w
 
 
+def overlap(question: str, other: str) -> float:
+    """Share of the question's meaningful words that also appear in `other` (1.0 if it has none)."""
+    q = {_stem(w) for w in tokens(question) if w not in GENERIC and not w.isdigit()}
+    if not q:
+        return 1.0
+    return len(q & {_stem(w) for w in tokens(other)}) / len(q)
+
+
 def addresses_question(question: str, cited: str) -> bool:
     """True if the cited sources share at least one meaningful word with the question."""
-    q = {_stem(w) for w in tokens(question) if w not in GENERIC and not w.isdigit()}
-    src = {_stem(w) for w in tokens(cited)}
-    return not q or bool(q & src)
+    return overlap(question, cited) > 0
 
 
 def check(d: Drafted, q: Question, ev: Evidence) -> DraftResult:
