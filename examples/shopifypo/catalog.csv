@@ -1,0 +1,14 @@
+Handle,Title,Body (HTML),Vendor,Type,Tags,Published,Option1 Name,Option1 Value,Variant SKU,Variant Grams,Variant Inventory Qty,Variant Price,Variant Compare At Price,Variant Barcode,Image Src,Status
+cedar-sage-soy-candle,Cedar & Sage Soy Candle,,Juniper & Pine,Candle,,TRUE,Size,8 oz,JP-CS-08,227,140,24.00,,850012340011,,active
+cedar-sage-soy-candle,,,,,,,,12 oz,JP-CS-12,227,90,34.00,,850012340028,,
+cedar-sage-soy-candle,,,,,,,,,,,,,,,https://cdn.example/cedar-sage-2.jpg,
+fig-leaf-soy-candle,Fig Leaf Soy Candle,,Juniper & Pine,Candle,,TRUE,Size,8 oz,JP-FL-08,227,120,24.00,,850012340035,,active
+fig-leaf-soy-candle,,,,,,,,12 oz,JP-FL-12,227,60,34.00,,850012340042,,
+sea-salt-linen-soy-candle,Sea Salt Linen Soy Candle,,Juniper & Pine,Candle,,TRUE,Size,8 oz,JP-SL-08,227,75,24.00,,850012340059,,active
+sea-salt-linen-soy-candle,,,,,,,,12 oz,JP-SL-12,227,48,34.00,,850012340066,,
+amber-smoke-soy-candle,Amber Smoke Soy Candle,,Juniper & Pine,Candle,,TRUE,Size,8 oz,JP-AS-08,227,80,24.00,,850012340073,,active
+amber-smoke-soy-candle,,,,,,,,12 oz,JP-AS-12,227,4,34.00,,850012340080,,
+wick-trimmer,Wick Trimmer,,Juniper & Pine,Accessory,,TRUE,Finish,Brass,JP-WT-BR,227,40,18.00,,850012340097,,active
+wick-trimmer,,,,,,,,Black,JP-WT-BK,227,36,18.00,,850012340103,,
+safety-matches,Safety Matches,,Juniper & Pine,Accessory,,TRUE,Title,Default Title,JP-MATCH,227,300,6.00,,850012340110,,active
+holiday-gift-set,Holiday Gift Set,,Juniper & Pine,Gift Set,,TRUE,Title,Default Title,JP-GIFT-24,227,0,58.00,,850012340127,,archived

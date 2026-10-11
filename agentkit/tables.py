@@ -82,8 +82,13 @@ def sheet_text(path_or_bytes) -> str:
     wb = load_workbook(src, read_only=True, data_only=True)
     out = []
     for ws in wb.worksheets:
-        lines = [" | ".join(_cell(v) for v in r if _cell(v)) for r in ws.iter_rows(values_only=True)]
-        lines = [x for x in lines if x]
+        lines = []
+        for r in ws.iter_rows(values_only=True):
+            vals = [_cell(v) for v in r]
+            while vals and not vals[-1]:
+                vals.pop()
+            if any(vals):  # empty cells inside a row stay, so the columns line up
+                lines.append(" | ".join(vals))
         if lines and len(wb.worksheets) > 1:
             out.append(f"[Sheet: {ws.title}]")
         out += lines
@@ -108,7 +113,7 @@ class Sheet:
     formats: dict[int, str] = field(default_factory=dict)  # column number (1-based) -> number format, e.g. '"$"#,##0'
 
 
-def write_xlsx(path: str | Path, sheets: list[Sheet]) -> None:
+def write_xlsx(path, sheets: list[Sheet]) -> None:
     """A workbook with a bold, frozen header row on each sheet and yellow rows to check."""
     from openpyxl import Workbook
     from openpyxl.styles import Alignment, Font, PatternFill
@@ -136,4 +141,24 @@ def write_xlsx(path: str | Path, sheets: list[Sheet]) -> None:
                 if fmt and isinstance(c.value, (int, float)):
                     c.number_format = fmt
         ws.freeze_panes = "A2"
-    wb.save(str(path))
+    wb.save(path if hasattr(path, "write") else str(path))
+
+
+def xlsx_bytes(sheets: list[Sheet]) -> bytes:
+    """An Excel file whose bytes are the same on every run (fixed timestamps), for synthetic examples and tests."""
+    import io
+    import re as _re
+    import zipfile
+
+    raw = io.BytesIO()
+    write_xlsx(raw, sheets)
+    out = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(raw.getvalue())) as src, zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as dst:
+        for info in src.infolist():
+            data = src.read(info.filename)
+            if info.filename == "docProps/core.xml":
+                data = _re.sub(rb"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ", b"2026-01-01T00:00:00Z", data)
+            fixed = zipfile.ZipInfo(info.filename, date_time=(2026, 1, 1, 0, 0, 0))
+            fixed.compress_type = zipfile.ZIP_DEFLATED
+            dst.writestr(fixed, data)
+    return out.getvalue()

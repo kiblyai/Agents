@@ -1,0 +1,9 @@
+From: Raj Mehta <buyer@willowstreetgifts.example>
+To: Juniper & Pine Wholesale <wholesale@juniperpine.example>
+Subject: Reorder
+Date: Fri, 09 Oct 2026 16:40:00 -0400
+
+Hi - could you send the same as our last order? Same ship-to.
+
+Thanks,
+Raj

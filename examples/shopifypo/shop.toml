@@ -1,0 +1,9 @@
+# Settings for one merchant (fictional example).
+[shop]
+name = "Juniper & Pine Candle Co."
+wholesale_discount = 0.5   # wholesale = half of retail for SKUs missing from prices.csv
+price_tolerance = 0.01     # flag PO prices more than 1% off
+require_po_number = true
+min_ship_days = 2          # flag ship dates sooner than this after the PO
+tags = ["wholesale", "po-agent"]
+shop_domain = "juniper-pine-example.myshopify.com"

@@ -1,0 +1,562 @@
+{
+ "note": "Answer key for the synthetic wholesale inbox made by `python -m shopifypo sample`. Fictional companies. `reading` is what a perfect model returns; `expect` is what the checks should then produce.",
+ "emails": [
+  {
+   "file": "01_harbor_vine_po.eml",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "HV-2291",
+    "buyer_company": "Harbor & Vine Mercantile",
+    "buyer_name": "Elena Brooks",
+    "buyer_email": "orders@harborvine.example",
+    "ship_to": {
+     "name": "",
+     "company": "Harbor & Vine Mercantile",
+     "address1": "88 Commercial St",
+     "address2": "",
+     "city": "Portland",
+     "state": "ME",
+     "zip": "04101",
+     "country": "US"
+    },
+    "requested_ship_date": "2026-10-16",
+    "payment_terms": "Net 30",
+    "lines": [
+     {
+      "vendor_sku": "JP-CS-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Cedar & Sage Soy Candle 8 oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 11.5,
+      "line_total": 276
+     },
+     {
+      "vendor_sku": "JP-FL-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Fig Leaf Soy Candle 8 oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 11.5,
+      "line_total": 276
+     },
+     {
+      "vendor_sku": "JP-SL-12",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Sea Salt Linen Soy Candle 12 oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 17,
+      "line_total": 204
+     },
+     {
+      "vendor_sku": "JP-WT-BR",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Wick Trimmer - Brass",
+      "quantity": 8,
+      "unit": "",
+      "unit_price": 9,
+      "line_total": 72
+     }
+    ],
+    "subtotal": 828,
+    "shipping": null,
+    "tax": null,
+    "total": 828,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "orders@harborvine.example",
+    "ready": true,
+    "flags": [],
+    "lines": [
+     {
+      "sku": "JP-CS-08",
+      "units": 24,
+      "unit_price": 11.5
+     },
+     {
+      "sku": "JP-FL-08",
+      "units": 24,
+      "unit_price": 11.5
+     },
+     {
+      "sku": "JP-SL-12",
+      "units": 12,
+      "unit_price": 17.0
+     },
+     {
+      "sku": "JP-WT-BR",
+      "units": 8,
+      "unit_price": 9.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "02_willow_street_po.eml",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "WSG-0412",
+    "buyer_company": "Willow Street Gifts",
+    "buyer_name": "Raj Mehta",
+    "buyer_email": "buyer@willowstreetgifts.example",
+    "ship_to": {
+     "name": "",
+     "company": "Willow Street Gifts",
+     "address1": "41 Church St",
+     "address2": "",
+     "city": "Burlington",
+     "state": "VT",
+     "zip": "05401",
+     "country": "US"
+    },
+    "requested_ship_date": "2026-10-20",
+    "payment_terms": "",
+    "lines": [
+     {
+      "vendor_sku": "",
+      "buyer_sku": "WSG-1012",
+      "barcode": "",
+      "description": "Cedar Sage 12oz candle",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 17,
+      "line_total": 204
+     },
+     {
+      "vendor_sku": "",
+      "buyer_sku": "WSG-2008",
+      "barcode": "",
+      "description": "Fig Leaf 8oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 12,
+      "line_total": 144
+     },
+     {
+      "vendor_sku": "",
+      "buyer_sku": "WSG-3104",
+      "barcode": "850012340097",
+      "description": "Brass wick trimmer",
+      "quantity": 4,
+      "unit": "",
+      "unit_price": 9,
+      "line_total": 36
+     },
+     {
+      "vendor_sku": "",
+      "buyer_sku": "WSG-3307",
+      "barcode": "",
+      "description": "Sea Salt Linen candle",
+      "quantity": 6,
+      "unit": "",
+      "unit_price": 12,
+      "line_total": 72
+     }
+    ],
+    "subtotal": null,
+    "shipping": null,
+    "tax": null,
+    "total": 456,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "buyer@willowstreetgifts.example",
+    "ready": false,
+    "flags": [
+     "ambiguous"
+    ],
+    "lines": [
+     {
+      "sku": "JP-CS-12",
+      "units": 12,
+      "unit_price": 17.0
+     },
+     {
+      "sku": "JP-FL-08",
+      "units": 12,
+      "unit_price": 12.0
+     },
+     {
+      "sku": "JP-WT-BR",
+      "units": 4,
+      "unit_price": 9.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "03_paper_lantern.txt",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "7781",
+    "buyer_company": "The Paper Lantern",
+    "buyer_name": "Jess Alvarez",
+    "buyer_email": "jess@paperlantern.example",
+    "ship_to": {
+     "name": "",
+     "company": "The Paper Lantern",
+     "address1": "17 Lexington Ave",
+     "address2": "",
+     "city": "Asheville",
+     "state": "NC",
+     "zip": "28801",
+     "country": "US"
+    },
+    "requested_ship_date": "",
+    "payment_terms": "Net 30",
+    "lines": [
+     {
+      "vendor_sku": "JP-FL-12",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Fig Leaf Soy Candle 12 oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 17,
+      "line_total": null
+     },
+     {
+      "vendor_sku": "JP-MATCH",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Safety Matches",
+      "quantity": 6,
+      "unit": "",
+      "unit_price": 3,
+      "line_total": null
+     }
+    ],
+    "subtotal": null,
+    "shipping": null,
+    "tax": null,
+    "total": null,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "jess@paperlantern.example",
+    "ready": false,
+    "flags": [
+     "case_pack"
+    ],
+    "lines": [
+     {
+      "sku": "JP-FL-12",
+      "units": 12,
+      "unit_price": 17.0
+     },
+     {
+      "sku": "JP-MATCH",
+      "units": 6,
+      "unit_price": 3.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "04_coastline_po.eml",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "CH-5530",
+    "buyer_company": "Coastline Home Co.",
+    "buyer_name": "Owen Price",
+    "buyer_email": "purchasing@coastlinehome.example",
+    "ship_to": {
+     "name": "",
+     "company": "Coastline Home Co.",
+     "address1": "210 King St",
+     "address2": "",
+     "city": "Charleston",
+     "state": "SC",
+     "zip": "29401",
+     "country": "US"
+    },
+    "requested_ship_date": "2026-10-23",
+    "payment_terms": "",
+    "lines": [
+     {
+      "vendor_sku": "JP-AS-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Amber Smoke Soy Candle 8oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 10,
+      "line_total": 240
+     },
+     {
+      "vendor_sku": "JP-CS-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Cedar & Sage Soy Candle 8oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 12,
+      "line_total": 268
+     },
+     {
+      "vendor_sku": "JP-AS-12",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Amber Smoke Soy Candle 12oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 17,
+      "line_total": 204
+     }
+    ],
+    "subtotal": 712,
+    "shipping": null,
+    "tax": null,
+    "total": null,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "purchasing@coastlinehome.example",
+    "ready": false,
+    "flags": [
+     "price_mismatch",
+     "line_math",
+     "short_stock"
+    ],
+    "lines": [
+     {
+      "sku": "JP-AS-08",
+      "units": 24,
+      "unit_price": 12.0
+     },
+     {
+      "sku": "JP-CS-08",
+      "units": 24,
+      "unit_price": 12.0
+     },
+     {
+      "sku": "JP-AS-12",
+      "units": 12,
+      "unit_price": 17.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "05_harbor_vine_resend.eml",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "HV-2291",
+    "buyer_company": "Harbor & Vine Mercantile",
+    "buyer_name": "Elena Brooks",
+    "buyer_email": "orders@harborvine.example",
+    "ship_to": {
+     "name": "",
+     "company": "Harbor & Vine Mercantile",
+     "address1": "88 Commercial St",
+     "address2": "",
+     "city": "Portland",
+     "state": "ME",
+     "zip": "04101",
+     "country": "US"
+    },
+    "requested_ship_date": "2026-10-16",
+    "payment_terms": "Net 30",
+    "lines": [
+     {
+      "vendor_sku": "JP-CS-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Cedar & Sage Soy Candle 8 oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 11.5,
+      "line_total": 276
+     },
+     {
+      "vendor_sku": "JP-FL-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Fig Leaf Soy Candle 8 oz",
+      "quantity": 24,
+      "unit": "",
+      "unit_price": 11.5,
+      "line_total": 276
+     },
+     {
+      "vendor_sku": "JP-SL-12",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Sea Salt Linen Soy Candle 12 oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": 17,
+      "line_total": 204
+     },
+     {
+      "vendor_sku": "JP-WT-BR",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Wick Trimmer - Brass",
+      "quantity": 8,
+      "unit": "",
+      "unit_price": 9,
+      "line_total": 72
+     }
+    ],
+    "subtotal": 828,
+    "shipping": null,
+    "tax": null,
+    "total": 828,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "orders@harborvine.example",
+    "ready": false,
+    "flags": [
+     "duplicate"
+    ],
+    "lines": [
+     {
+      "sku": "JP-CS-08",
+      "units": 24,
+      "unit_price": 11.5
+     },
+     {
+      "sku": "JP-FL-08",
+      "units": 24,
+      "unit_price": 11.5
+     },
+     {
+      "sku": "JP-SL-12",
+      "units": 12,
+      "unit_price": 17.0
+     },
+     {
+      "sku": "JP-WT-BR",
+      "units": 8,
+      "unit_price": 9.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "06_maple_row_new.eml",
+   "reading": {
+    "kind": "purchase_order",
+    "po_number": "MR-1001",
+    "buyer_company": "Maple Row Boutique",
+    "buyer_name": "Dana Whitaker",
+    "buyer_email": "dana@maplerowboutique.example",
+    "ship_to": {
+     "name": "",
+     "company": "Maple Row Boutique",
+     "address1": "5 Main St",
+     "address2": "",
+     "city": "Stowe",
+     "state": "VT",
+     "zip": "05672",
+     "country": "US"
+    },
+    "requested_ship_date": "",
+    "payment_terms": "",
+    "lines": [
+     {
+      "vendor_sku": "JP-GIFT-24",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Holiday Gift Set",
+      "quantity": 6,
+      "unit": "",
+      "unit_price": null,
+      "line_total": null
+     },
+     {
+      "vendor_sku": "JP-LAV-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Lavender Soy Candle 8 oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": null,
+      "line_total": null
+     },
+     {
+      "vendor_sku": "JP-SL-08",
+      "buyer_sku": "",
+      "barcode": "",
+      "description": "Sea Salt Linen Soy Candle 8 oz",
+      "quantity": 12,
+      "unit": "",
+      "unit_price": null,
+      "line_total": null
+     }
+    ],
+    "subtotal": null,
+    "shipping": null,
+    "tax": null,
+    "total": null,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "",
+    "ready": false,
+    "flags": [
+     "new_customer",
+     "archived",
+     "unmatched",
+     "no_po_price"
+    ],
+    "lines": [
+     {
+      "sku": "JP-GIFT-24",
+      "units": 6,
+      "unit_price": 29.0
+     },
+     {
+      "sku": "JP-SL-08",
+      "units": 12,
+      "unit_price": 12.0
+     }
+    ]
+   }
+  },
+  {
+   "file": "07_willow_reorder.txt",
+   "reading": {
+    "kind": "reorder",
+    "po_number": "",
+    "buyer_company": "Willow Street Gifts",
+    "buyer_name": "Raj Mehta",
+    "buyer_email": "buyer@willowstreetgifts.example",
+    "ship_to": {
+     "name": "",
+     "company": "",
+     "address1": "",
+     "address2": "",
+     "city": "",
+     "state": "",
+     "zip": "",
+     "country": "US"
+    },
+    "requested_ship_date": "",
+    "payment_terms": "",
+    "lines": [],
+    "subtotal": null,
+    "shipping": null,
+    "tax": null,
+    "total": null,
+    "notes": ""
+   },
+   "expect": {
+    "customer": "buyer@willowstreetgifts.example",
+    "ready": false,
+    "flags": [
+     "reorder"
+    ],
+    "lines": []
+   }
+  }
+ ]
+}
