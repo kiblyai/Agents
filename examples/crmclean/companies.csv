@@ -1,0 +1,11 @@
+Record ID,Company name,Company Domain Name,Industry,Number of Employees,City,State/Region,Country/Region,Phone Number,Description,Last Activity Date,Create Date
+1001,Northbeam Analytics,northbeam.example,,,,,USA,,,2026-09-15,2024-03-02
+1002,ACME ANALYTICS INC,acme-analytics.example,Computer Software,120,Austin,TX,United States,(512) 555-0182,Analytics software for retailers.,2026-08-01,2023-01-10
+1003,Acme Analytics,https://www.acme-analytics.example/,,,,,,,,2025-02-11,2025-02-11
+1004,BRIGHTWAVE SOLAR LLC,brightwave-solar.example,Renewables & Environment,35,Fresno,California,United States,559.555.0143,Commercial solar installation.,2026-07-20,2022-05-05
+1005,Tidewater Cold Storage,tidewater-cold.example,,,,,United States,,,2026-06-01,2024-09-09
+1006,Copperline Dental Labs,copperline-dental.example,,18,,,United States,,,2026-05-12,2024-11-11
+1007,Fernhill Bakery Supply,fernhill-bakery.example,Wholesale,,,,,,,2026-09-30,2025-06-06
+1008,Lakeshore Physical Therapy,,Hospital & Health Care,22,Erie,PA,United States,,,2026-03-10,2021-08-08
+1009,Lakeshore Physical Therapy,lakeshore-pt.example,,,,,,,,2026-04-04,2025-10-01
+1010,Granite Peak Consulting,granitepeak.example,Management Consulting,9,Boulder,CO,United States,+44 20 7946 0958,Operations consulting for manufacturers.,2026-09-01,2020-02-02

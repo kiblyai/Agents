@@ -1,0 +1,13 @@
+Record ID,First Name,Last Name,Email,Phone Number,Job Title,Lifecycle Stage,Associated Company ID,Last Activity Date,Create Date
+201,Jane,Doe,Jane.Doe@northbeam.example,(614) 555-0101,CEO,customer,1001,2026-09-14,2024-03-02
+202,Jane,Doe,jane.doe@northbeam.example,,Chief Executive Officer,lead,,2025-01-20,2025-01-20
+203,MARK,RIVERA,mark.rivera@acme-analytics.example,512-555-0199,VP Sales,opportunity,1002,2026-08-20,2023-01-11
+204,priya,shah,priya.shah@acme-analytics.example ,,Analyst,lead,,2026-07-07,2026-07-07
+205,Chris,Lee,chris.lee@brightwave-solar.example,559-555-0110,Ops Manager,lead,1004,2026-07-01,2025-03-03
+206,Chris,Lee,clee@brightwave-solar.example,,Operations Manager,lead,1004,2026-06-15,2026-06-15
+207,Info,,info@tidewater-cold.example,,,subscriber,1005,2026-05-05,2025-05-05
+208,Sam,Patel,sam.patel@gmail.com,555-0199,Owner,lead,,2026-09-10,2026-09-10
+209,Dana,Whitfield,dana@@copperline-dental.example,,Lab Manager,lead,1006,2026-03-03,2025-03-03
+210,Tom,Becker,tom.becker@fernhill-bakery.example,+1 (503) 555-0177,Purchasing,lead,,2024-02-02,2023-12-12
+211,Ana,Lopez,ana.lopez@granitepeak.example,+44 20 7946 0958,Partner,customer,1010,2026-09-02,2020-02-03
+212,Lee,Wong,lee.wong@unknownco.example,,CTO,lead,,2026-08-08,2026-08-08

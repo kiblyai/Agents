@@ -23,7 +23,7 @@ def _cell(v) -> str:
     return str(v).strip()
 
 
-def _rows_from_matrix(matrix: list[list]) -> list[dict[str, str]]:
+def _rows_from_matrix(matrix: list[list], strip: bool = True) -> list[dict[str, str]]:
     """The first row with at least two filled cells is the header; empty rows are skipped."""
     start = next((i for i, r in enumerate(matrix) if sum(1 for v in r if _cell(v)) >= 2), None)
     if start is None:
@@ -31,26 +31,27 @@ def _rows_from_matrix(matrix: list[list]) -> list[dict[str, str]]:
     header = [norm_header(h) for h in matrix[start]]
     rows = []
     for r in matrix[start + 1:]:
-        vals = [_cell(v) for v in r]
-        if not any(vals):
+        vals = [_cell(v) if strip or not isinstance(v, str) else v for v in r]
+        if not any(_cell(v) for v in vals):
             continue
         rows.append({h: (vals[i] if i < len(vals) else "") for i, h in enumerate(header) if h})
     return rows
 
 
-def read_table(path: str | Path, sheet: str | None = None) -> list[dict[str, str]]:
-    """Rows of a CSV or Excel file as {normalized header: text}. Excel reads the named sheet, else the first."""
+def read_table(path: str | Path, sheet: str | None = None, strip: bool = True) -> list[dict[str, str]]:
+    """Rows of a CSV or Excel file as {normalized header: text}. Excel reads the named sheet, else the first.
+    strip=False keeps spaces around values (for cleanup tools that report them)."""
     path = Path(path)
     ext = path.suffix.lower()
     if ext in (".csv", ".txt"):
         with open(path, newline="", encoding="utf-8-sig") as f:
-            return _rows_from_matrix(list(csv.reader(f)))
+            return _rows_from_matrix(list(csv.reader(f)), strip)
     if ext in (".xlsx", ".xlsm"):
         from openpyxl import load_workbook
 
         wb = load_workbook(str(path), read_only=True, data_only=True)
         ws = wb[sheet] if sheet else wb.worksheets[0]
-        rows = _rows_from_matrix([list(r) for r in ws.iter_rows(values_only=True)])
+        rows = _rows_from_matrix([list(r) for r in ws.iter_rows(values_only=True)], strip)
         wb.close()
         return rows
     if ext == ".xls":

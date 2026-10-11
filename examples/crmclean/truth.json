@@ -1,0 +1,371 @@
+{
+ "note": "Answer key for the synthetic HubSpot portal made by `python -m crmclean sample`. Fictional companies. Run with --today 2026-10-12. `enrich` is what a perfect model returns.",
+ "today": "2026-10-12",
+ "enrich": {
+  "Northbeam Analytics": {
+   "industry": {
+    "value": "Computer Software",
+    "quote": "Northbeam Analytics builds forecasting dashboards for regional grocery chains."
+   },
+   "description": {
+    "value": "Builds forecasting dashboards for regional grocery chains.",
+    "quote": "Northbeam Analytics builds forecasting dashboards for regional grocery chains."
+   },
+   "employees": {
+    "value": "42",
+    "quote": "Our team of 42 data scientists and engineers works from our office in Columbus, Ohio."
+   },
+   "city": {
+    "value": "Columbus",
+    "quote": "Our team of 42 data scientists and engineers works from our office in Columbus, Ohio."
+   },
+   "state": {
+    "value": "Ohio",
+    "quote": "Our team of 42 data scientists and engineers works from our office in Columbus, Ohio."
+   }
+  },
+  "Tidewater Cold Storage": {
+   "industry": {
+    "value": "Warehousing",
+    "quote": "Tidewater Cold Storage runs temperature-controlled warehouses for seafood and produce shippers on the Gulf Coast."
+   },
+   "description": {
+    "value": "Runs temperature-controlled warehouses for seafood and produce shippers on the Gulf Coast.",
+    "quote": "Tidewater Cold Storage runs temperature-controlled warehouses for seafood and produce shippers on the Gulf Coast."
+   },
+   "employees": {
+    "value": "",
+    "quote": ""
+   },
+   "city": {
+    "value": "Mobile",
+    "quote": "Headquarters: Mobile, Alabama."
+   },
+   "state": {
+    "value": "Alabama",
+    "quote": "Headquarters: Mobile, Alabama."
+   }
+  },
+  "Copperline Dental Labs": {
+   "industry": {
+    "value": "Medical Devices",
+    "quote": "Copperline Dental Labs makes crowns, bridges and implant restorations for dental practices across the Midwest."
+   },
+   "description": {
+    "value": "Makes crowns, bridges and implant restorations for dental practices across the Midwest.",
+    "quote": "Copperline Dental Labs makes crowns, bridges and implant restorations for dental practices across the Midwest."
+   },
+   "employees": {
+    "value": "",
+    "quote": ""
+   },
+   "city": {
+    "value": "Madison",
+    "quote": "Visit our lab in Madison, Wisconsin."
+   },
+   "state": {
+    "value": "Wisconsin",
+    "quote": "Visit our lab in Madison, Wisconsin."
+   }
+  },
+  "Fernhill Bakery Supply": {
+   "industry": {
+    "value": "",
+    "quote": ""
+   },
+   "description": {
+    "value": "Delivers flour, sugar and baking equipment to independent bakeries in Oregon and Washington.",
+    "quote": "Fernhill Bakery Supply delivers flour, sugar and baking equipment to independent bakeries in Oregon and Washington."
+   },
+   "employees": {
+    "value": "",
+    "quote": ""
+   },
+   "city": {
+    "value": "Salem",
+    "quote": "Family owned since 1987, based in Salem, Oregon."
+   },
+   "state": {
+    "value": "Oregon",
+    "quote": "Family owned since 1987, based in Salem, Oregon."
+   }
+  }
+ },
+ "changes": [
+  [
+   "company",
+   "1001",
+   "country",
+   "United States"
+  ],
+  [
+   "company",
+   "1002",
+   "name",
+   "Acme Analytics Inc"
+  ],
+  [
+   "company",
+   "1002",
+   "state",
+   "Texas"
+  ],
+  [
+   "company",
+   "1002",
+   "phone",
+   "+1 512-555-0182"
+  ],
+  [
+   "company",
+   "1004",
+   "name",
+   "Brightwave Solar LLC"
+  ],
+  [
+   "company",
+   "1004",
+   "phone",
+   "+1 559-555-0143"
+  ],
+  [
+   "company",
+   "1008",
+   "state",
+   "Pennsylvania"
+  ],
+  [
+   "company",
+   "1010",
+   "state",
+   "Colorado"
+  ],
+  [
+   "contact",
+   "201",
+   "email",
+   "jane.doe@northbeam.example"
+  ],
+  [
+   "contact",
+   "201",
+   "phone",
+   "+1 614-555-0101"
+  ],
+  [
+   "contact",
+   "203",
+   "firstname",
+   "Mark"
+  ],
+  [
+   "contact",
+   "203",
+   "lastname",
+   "Rivera"
+  ],
+  [
+   "contact",
+   "203",
+   "phone",
+   "+1 512-555-0199"
+  ],
+  [
+   "contact",
+   "204",
+   "email",
+   "priya.shah@acme-analytics.example"
+  ],
+  [
+   "contact",
+   "204",
+   "firstname",
+   "Priya"
+  ],
+  [
+   "contact",
+   "204",
+   "lastname",
+   "Shah"
+  ],
+  [
+   "contact",
+   "204",
+   "associatedcompanyid",
+   "1002"
+  ],
+  [
+   "contact",
+   "205",
+   "phone",
+   "+1 559-555-0110"
+  ],
+  [
+   "contact",
+   "210",
+   "associatedcompanyid",
+   "1007"
+  ],
+  [
+   "contact",
+   "210",
+   "phone",
+   "+1 503-555-0177"
+  ],
+  [
+   "company",
+   "1001",
+   "industry",
+   "Computer Software"
+  ],
+  [
+   "company",
+   "1001",
+   "description",
+   "Builds forecasting dashboards for regional grocery chains."
+  ],
+  [
+   "company",
+   "1001",
+   "numberofemployees",
+   "42"
+  ],
+  [
+   "company",
+   "1001",
+   "city",
+   "Columbus"
+  ],
+  [
+   "company",
+   "1001",
+   "state",
+   "Ohio"
+  ],
+  [
+   "company",
+   "1005",
+   "industry",
+   "Warehousing"
+  ],
+  [
+   "company",
+   "1005",
+   "description",
+   "Runs temperature-controlled warehouses for seafood and produce shippers on the Gulf Coast."
+  ],
+  [
+   "company",
+   "1005",
+   "city",
+   "Mobile"
+  ],
+  [
+   "company",
+   "1005",
+   "state",
+   "Alabama"
+  ],
+  [
+   "company",
+   "1006",
+   "industry",
+   "Medical Devices"
+  ],
+  [
+   "company",
+   "1006",
+   "description",
+   "Makes crowns, bridges and implant restorations for dental practices across the Midwest."
+  ],
+  [
+   "company",
+   "1006",
+   "city",
+   "Madison"
+  ],
+  [
+   "company",
+   "1006",
+   "state",
+   "Wisconsin"
+  ],
+  [
+   "company",
+   "1007",
+   "description",
+   "Delivers flour, sugar and baking equipment to independent bakeries in Oregon and Washington."
+  ],
+  [
+   "company",
+   "1007",
+   "city",
+   "Salem"
+  ],
+  [
+   "company",
+   "1007",
+   "state",
+   "Oregon"
+  ]
+ ],
+ "merges": [
+  [
+   "company",
+   "1002",
+   "1003"
+  ],
+  [
+   "contact",
+   "201",
+   "202"
+  ]
+ ],
+ "flags": [
+  [
+   "company",
+   "1008",
+   "possible_duplicate"
+  ],
+  [
+   "company",
+   "1009",
+   "possible_duplicate"
+  ],
+  [
+   "contact",
+   "205",
+   "possible_duplicate"
+  ],
+  [
+   "contact",
+   "206",
+   "possible_duplicate"
+  ],
+  [
+   "contact",
+   "207",
+   "role_address"
+  ],
+  [
+   "contact",
+   "208",
+   "invalid_phone"
+  ],
+  [
+   "contact",
+   "209",
+   "invalid_email"
+  ],
+  [
+   "contact",
+   "210",
+   "stale"
+  ],
+  [
+   "contact",
+   "212",
+   "no_company"
+  ]
+ ]
+}

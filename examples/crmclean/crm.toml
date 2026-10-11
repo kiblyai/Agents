@@ -1,0 +1,6 @@
+# Cleanup settings for one HubSpot portal (fictional example).
+[crm]
+portal = "Pinecrest Marketing"
+stale_months = 18          # leads with no activity for this long are flagged
+state_format = "name"      # "name" (California) or "code" (CA)
+country_name = "United States"

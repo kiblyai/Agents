@@ -1,7 +1,7 @@
 [project]
 name = "leadagent"
 version = "0.1.0"
-description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron), freight quotes (freightq), cold-email outreach (outreach), Shopify wholesale POs (shopifypo), grant prospecting (grants) and real-estate deadlines (txcoord)."
+description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron), freight quotes (freightq), cold-email outreach (outreach), Shopify wholesale POs (shopifypo), grant prospecting (grants), real-estate deadlines (txcoord) and HubSpot cleanup (crmclean)."
 requires-python = ">=3.11"
 dependencies = [
     "openai>=1.40",
@@ -26,13 +26,14 @@ outreach = "outreach.__main__:main"
 shopifypo = "shopifypo.__main__:main"
 grants = "grants.__main__:main"
 txcoord = "txcoord.__main__:main"
+crmclean = "crmclean.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "outreach", "shopifypo", "grants", "txcoord"]
+packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "outreach", "shopifypo", "grants", "txcoord", "crmclean"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
