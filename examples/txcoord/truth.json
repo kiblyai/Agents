@@ -1,0 +1,281 @@
+{
+ "note": "Answer key for the synthetic transactions made by `python -m txcoord sample`. Fictional parties. Run with --today 2026-10-12. `reading` is what a perfect model returns; `expect` is what the code should then work out.",
+ "today": "2026-10-12",
+ "transactions": [
+  {
+   "folder": "101_maple_ave",
+   "reading": {
+    "property": "101 Maple Avenue, Lakeview, OH 44095",
+    "buyers": [
+     "Daniel Kim",
+     "Sofia Kim"
+    ],
+    "sellers": [
+     "Patricia Owens"
+    ],
+    "price": 425000,
+    "price_in_words": "Four Hundred Twenty-Five Thousand Dollars",
+    "earnest_money": 10000,
+    "acceptance_date": "2026-10-02",
+    "closing_date": "2026-11-25",
+    "financing": "conventional",
+    "loan_amount": 340000,
+    "down_payment": null,
+    "deadlines": [
+     {
+      "name": "Earnest money",
+      "term": "within three (3) business days after the Acceptance Date",
+      "quote": "Buyer shall deliver earnest money of $10,000 to Northcoast Title Agency within three (3) business days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "Loan commitment",
+      "term": "no later than thirty (30) days after the Acceptance Date",
+      "quote": "Buyer shall deliver a written loan commitment no later than thirty (30) days after the Acceptance Date.",
+      "party": "lender"
+     },
+     {
+      "name": "Appraisal contingency",
+      "term": "twenty-one (21) days after the Acceptance Date",
+      "quote": "The appraisal contingency expires twenty-one (21) days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "Inspection objections",
+      "term": "within ten (10) days after the Acceptance Date",
+      "quote": "Buyer may inspect the property and shall deliver any written objections within ten (10) days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "HOA documents",
+      "term": "within five (5) days after the Acceptance Date",
+      "quote": "Seller shall deliver the HOA documents within five (5) days after the Acceptance Date.",
+      "party": "seller"
+     },
+     {
+      "name": "Title objections",
+      "term": "within seven (7) days after receipt of the title commitment",
+      "quote": "Buyer shall deliver any title objections within seven (7) days after receipt of the title commitment.",
+      "party": "buyer"
+     },
+     {
+      "name": "Final walk-through",
+      "term": "within 24 hours before closing",
+      "quote": "Buyer may conduct a final walk-through within 24 hours before closing.",
+      "party": "buyer"
+     },
+     {
+      "name": "Possession",
+      "term": "at closing",
+      "quote": "Possession shall be delivered at closing.",
+      "party": "seller"
+     }
+    ],
+    "changes": [
+     {
+      "document": "addendum_1.txt",
+      "term": "closing date",
+      "new_value": "2026-11-25",
+      "quote": "The Closing Date in Section 10 is changed to November 25, 2026."
+     }
+    ],
+    "contacts": [
+     {
+      "role": "buyer's agent",
+      "name": "Rachel Moore",
+      "company": "Harbor Realty",
+      "email": "rachel.moore@harborrealty.example"
+     },
+     {
+      "role": "listing agent",
+      "name": "Tom Reyes",
+      "company": "Lakeview Homes Group",
+      "email": "tom.reyes@lakeviewhomes.example"
+     },
+     {
+      "role": "lender",
+      "name": "",
+      "company": "Erie Shore Bank",
+      "email": "loans@erieshorebank.example"
+     },
+     {
+      "role": "title",
+      "name": "",
+      "company": "Northcoast Title Agency",
+      "email": "closings@northcoasttitle.example"
+     }
+    ]
+   },
+   "expect": {
+    "acceptance": "2026-10-02",
+    "closing": "2026-11-25",
+    "ready": true,
+    "flags": [
+     "depends_on_event"
+    ],
+    "deadlines": {
+     "earnest": "2026-10-07",
+     "loan": "2026-11-02",
+     "apprais": "2026-10-23",
+     "inspect": "2026-10-13",
+     "hoa": "2026-10-07",
+     "title": null,
+     "walk": "2026-11-24",
+     "possession": "2026-11-25",
+     "closing": "2026-11-25"
+    }
+   }
+  },
+  {
+   "folder": "22_birch_ct",
+   "reading": {
+    "property": "22 Birch Court, Lakeview, OH 44095",
+    "buyers": [
+     "Morgan Ellis"
+    ],
+    "sellers": [
+     "Westbrook Holdings LLC"
+    ],
+    "price": 310000,
+    "price_in_words": "Three Hundred Ten Thousand Dollars",
+    "earnest_money": 5000,
+    "acceptance_date": "2026-09-28",
+    "closing_date": "2026-10-30",
+    "financing": "cash",
+    "loan_amount": null,
+    "down_payment": null,
+    "deadlines": [
+     {
+      "name": "Earnest money",
+      "term": "within two (2) days after the Acceptance Date",
+      "quote": "Buyer shall deliver $5,000 to Northcoast Title Agency within two (2) days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "Inspection period",
+      "term": "seven (7) days after the Acceptance Date",
+      "quote": "Buyer's inspection period ends seven (7) days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "Possession",
+      "term": "at closing",
+      "quote": "Closing shall take place on or before October 30, 2026. Possession at closing.",
+      "party": "seller"
+     }
+    ],
+    "changes": [],
+    "contacts": [
+     {
+      "role": "buyer's agent",
+      "name": "Rachel Moore",
+      "company": "Harbor Realty",
+      "email": "rachel.moore@harborrealty.example"
+     },
+     {
+      "role": "listing agent",
+      "name": "Ana Brooks",
+      "company": "Brooks Realty",
+      "email": "ana@brooksrealty.example"
+     },
+     {
+      "role": "title",
+      "name": "",
+      "company": "Northcoast Title Agency",
+      "email": "closings@northcoasttitle.example"
+     }
+    ]
+   },
+   "expect": {
+    "acceptance": "2026-09-28",
+    "closing": "2026-10-30",
+    "ready": true,
+    "flags": [],
+    "deadlines": {
+     "earnest": "2026-09-30",
+     "inspect": "2026-10-05",
+     "possession": "2026-10-30",
+     "closing": "2026-10-30"
+    }
+   }
+  },
+  {
+   "folder": "9_cedar_ln",
+   "reading": {
+    "property": "9 Cedar Lane, Lakeview, OH 44095",
+    "buyers": [
+     "Grace Park"
+    ],
+    "sellers": [
+     "Henry Adams",
+     "Lucy Adams"
+    ],
+    "price": 389000,
+    "price_in_words": "Three Hundred Eighty-Nine Thousand Five Hundred Dollars",
+    "earnest_money": 50000,
+    "acceptance_date": "2026-10-01",
+    "closing_date": "2026-11-10",
+    "financing": "FHA",
+    "loan_amount": 311200,
+    "down_payment": 77800,
+    "deadlines": [
+     {
+      "name": "Earnest money",
+      "term": "within five (5) business days after the Acceptance Date",
+      "quote": "Buyer shall deliver $50,000 to Northcoast Title Agency within five (5) business days after the Acceptance Date.",
+      "party": "buyer"
+     },
+     {
+      "name": "Loan commitment",
+      "term": "within thirty-five (35) days after the Acceptance Date",
+      "quote": "Buyer shall deliver a written loan commitment within thirty-five (35) days after the Acceptance Date.",
+      "party": "lender"
+     },
+     {
+      "name": "Inspection period",
+      "term": "forty-five (45) days after the Acceptance Date",
+      "quote": "Buyer's inspection period ends forty-five (45) days after the Acceptance Date.",
+      "party": "buyer"
+     }
+    ],
+    "changes": [],
+    "contacts": [
+     {
+      "role": "buyer's agent",
+      "name": "Luis Ortega",
+      "company": "Summit Realty",
+      "email": "luis@summitrealty.example"
+     },
+     {
+      "role": "listing agent",
+      "name": "Tom Reyes",
+      "company": "Lakeview Homes Group",
+      "email": "tom.reyes@lakeviewhomes.example"
+     },
+     {
+      "role": "lender",
+      "name": "",
+      "company": "Erie Shore Bank",
+      "email": "loans@erieshorebank.example"
+     }
+    ]
+   },
+   "expect": {
+    "acceptance": "2026-10-01",
+    "closing": "2026-11-10",
+    "ready": false,
+    "flags": [
+     "price_words",
+     "after_closing",
+     "earnest_unusual"
+    ],
+    "deadlines": {
+     "earnest": "2026-10-08",
+     "loan": "2026-11-05",
+     "inspect": "2026-11-16",
+     "closing": "2026-11-10"
+    }
+   }
+  }
+ ]
+}

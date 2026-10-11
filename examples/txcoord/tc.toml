@@ -1,0 +1,10 @@
+# Transaction coordinator settings (fictional example).
+[tc]
+name = "Lakeview Transaction Services"
+coordinator = "Jamie Lee"
+email = "jamie@lakeviewtc.example"
+days_mean = "calendar"          # what "days" means when a contract doesn't say
+roll_to_business_day = true     # when a contract doesn't say: weekend or holiday deadlines move to the next business day
+federal_holidays = true
+remind_days = [3, 1]            # reminder emails this many days before each deadline
+soon_days = 5
