@@ -266,7 +266,7 @@ def test_cli_run_score_and_push(tmp_path, monkeypatch, capsys):
               "--out", str(out), "--model", "x:free"])
     printed = capsys.readouterr().out
     assert "WARNING: free models may log prompts" in printed
-    assert "Done: 6 purchase orders, 1 ready for Shopify, 6 to fix, 0 not a PO; 7 model requests" in printed
+    assert "Done: 7 emails: 1 ready for Shopify, 6 to fix, 0 not an order; 7 model requests" in printed
     cli.main(["score", "--run", str(out), "--truth", str(ex / "truth.json")])
     report = capsys.readouterr().out
     assert "Lines matched to the right SKU and quantity: 18 of 18 (100%)" in report

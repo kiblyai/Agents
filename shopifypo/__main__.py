@@ -87,8 +87,8 @@ async def _run(args) -> None:
     stats = write_outputs(out, orders, cfg.tags, seen)
     summ = summary(orders, llm.usage, runner, len(catalog.variants), problems)
     (out / "run_summary.json").write_text(json.dumps(summ, indent=2))
-    print(f"\nDone: {plural(summ['purchase_orders'], 'purchase order')}, {summ['ready']} ready for Shopify, "
-          f"{summ['to_fix']} to fix, {summ['not_po']} not a PO; {plural(summ['llm_requests'], 'model request')}; "
+    print(f"\nDone: {plural(summ['emails'], 'email')}: {summ['ready']} ready for Shopify, {summ['to_fix']} to fix, "
+          f"{summ['not_po']} not an order; {plural(summ['llm_requests'], 'model request')}; "
           f"${summ['cost_usd']:.4f}")
     if runner.stopped_reason:
         print("Stopped early: " + runner.stopped_reason)
