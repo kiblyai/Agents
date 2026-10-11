@@ -1,0 +1,27 @@
+Fine-tune an LLM for legal document classification
+
+Posted 3 hours ago
+Worldwide
+
+Fine-tune an open model to classify contracts into 40 categories. We have 5,000 labeled examples.
+
+$5,000.00
+Fixed-price
+
+Intermediate
+Experience Level
+
+Skills and Expertise: Python, LLM, Fine-tuning
+
+Activity on this job
+Proposals: 50+
+Send a proposal for: 16 Connects
+
+About the client
+Payment method verified
+4.9 of 5 reviews
+United States
+18 jobs posted
+80% hire rate, 2 open jobs
+$45K total spent
+Member since Mar 15, 2019

@@ -1,0 +1,54 @@
+# A fictional freelancer for the upworkbid example; replace with your own.
+[profile]
+name = "Sam Okafor"
+headline = "AI engineer: agents, RAG and document automation in Python"
+hourly_rate = 110
+floor_after_fees = 90          # the kill rule: an offer must work out at $90/h or more after Upwork's fee
+fee = 0.10
+min_fixed_budget = 500
+max_proposals = "20 to 50"     # skip jobs that already have more proposals than this
+skills = ["python", "openai", "langchain", "llm", "rag", "agents", "hubspot", "shopify", "pdf", "fastapi", "aws", "ocr"]
+exclude_words = ["data entry", "wordpress", "logo design"]
+proposal_words = 150
+signature = "Sam"
+
+[[portfolio]]
+id = "P1"
+title = "Lead-research agent"
+summary = "A Python agent that reads company websites, scores each company against an ideal customer profile and writes a cited opening line; tuned over 3 real runs."
+link = "https://portfolio.example/lead-agent"
+tags = ["agents", "sales", "llm"]
+
+[[portfolio]]
+id = "P2"
+title = "Security questionnaire drafting"
+summary = "Drafts answers to 250-question security questionnaires from a company's own documents, citing a source for every answer, with code checks on numbers and claims."
+link = "https://portfolio.example/security-questionnaires"
+tags = ["rag", "documents"]
+
+[[portfolio]]
+id = "P3"
+title = "Wholesale order agent for Shopify"
+summary = "Turns emailed purchase orders (PDF and Excel) into Shopify draft orders, matching every line to the catalog and checking prices and totals in code."
+link = "https://portfolio.example/shopify-orders"
+tags = ["pdf", "extraction", "shopify"]
+
+[[project_type]]
+name = "simple automation"
+hours = [6, 10]
+
+[[project_type]]
+name = "document extraction pipeline"
+hours = [15, 25]
+
+[[project_type]]
+name = "RAG chatbot"
+hours = [20, 35]
+
+[[project_type]]
+name = "agent with integrations"
+hours = [20, 30]
+
+[[project_type]]
+name = "model fine-tuning"
+hours = [30, 60]

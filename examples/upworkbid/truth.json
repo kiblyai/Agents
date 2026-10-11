@@ -1,0 +1,143 @@
+{
+ "note": "Answer key for the synthetic Upwork posts made by `python -m upworkbid sample`. Fictional clients. Run with --today 2026-10-12. `assess` is what a perfect model returns.",
+ "today": "2026-10-12",
+ "assess": {
+  "job01_lead_agent.txt": {
+   "project_type": "agent with integrations",
+   "fit": 90,
+   "requirements": [
+    {
+     "point": "research and score each lead",
+     "quote": "researches each company, scores it against our ideal customer profile"
+    },
+    {
+     "point": "write to HubSpot",
+     "quote": "updates the HubSpot record"
+    }
+   ],
+   "red_flags": [],
+   "opening_detail": "about 200 inbound demo requests a month",
+   "proposal": "With about 200 inbound demo requests a month, your two reps should only see the best leads first. I built a lead-research agent (P1) that reads company websites, scores each company against an ideal customer profile and writes a cited summary; it was tuned over 3 real runs. For you I'd trigger it on each new HubSpot form submission and write the score and summary to custom properties. First step: a short call to agree the scoring rubric and the properties, then a working version on a sample of your past leads.",
+   "portfolio_used": [
+    "P1"
+   ],
+   "answers": [
+    "My lead-research agent (P1) works from exports today; writing its scores to HubSpot through the API is the part I'd add for you, using custom properties."
+   ]
+  },
+  "job03_news_digest.txt": {
+   "project_type": "simple automation",
+   "fit": 70,
+   "requirements": [
+    {
+     "point": "daily summary by email",
+     "quote": "summarize the top stories in our industry every morning"
+    }
+   ],
+   "red_flags": [],
+   "opening_detail": "summarize the top stories in our industry every morning",
+   "proposal": "A script to summarize the top stories in your industry every morning is a small, well-defined job. I'd read the sites and RSS feeds you list, summarize each story in a couple of lines with its link, and email you the digest at a time you choose. My lead-research agent (P1) does the same kind of reading and summarizing for company websites. Which sources matter most to you?",
+   "portfolio_used": [
+    "P1"
+   ],
+   "answers": []
+  },
+  "job04_policy_rag.txt": {
+   "project_type": "RAG chatbot",
+   "fit": 92,
+   "requirements": [
+    {
+     "point": "answers from policy PDFs with sources",
+     "quote": "answer employee questions from our 300 policy PDFs"
+    },
+    {
+     "point": "admit when it doesn't know",
+     "quote": "It must say when it doesn't know."
+    }
+   ],
+   "red_flags": [],
+   "opening_detail": "answer employee questions from our 300 policy PDFs",
+   "proposal": "Answering employee questions from your 300 policy PDFs, always with the source, is close to what I built for security questionnaires (P2): it drafts answers from a company's own documents, cites a source for every answer and checks numbers and claims in code, so unsupported answers are flagged instead of shown. For you I'd add a simple chat page on AWS and an \"I don't know\" path when no policy covers the question. First step: share a few sample PDFs and real questions, and I'll show you answers with their citations.",
+   "portfolio_used": [
+    "P2"
+   ],
+   "answers": [
+    "Every answer must cite the passage it came from, and code checks that numbers and claims appear in the cited text; if nothing supports an answer, it says it doesn't know.",
+    "For a few hundred PDFs, keyword search plus a small embedding index in Postgres (pgvector) is enough and cheap to run on AWS; a dedicated vector database only pays off for a much larger collection."
+   ]
+  },
+  "job08_invoice_pdf.txt": {
+   "project_type": "document extraction pipeline",
+   "fit": 85,
+   "requirements": [
+    {
+     "point": "extract invoice fields",
+     "quote": "extract vendor, date, line items and totals from PDF invoices"
+    },
+    {
+     "point": "create bills in QuickBooks",
+     "quote": "create bills in QuickBooks Online"
+    }
+   ],
+   "red_flags": [],
+   "opening_detail": "extract vendor, date, line items and totals from PDF invoices",
+   "proposal": "To extract vendor, date, line items and totals from PDF invoices and create bills in QuickBooks Online, I'd reuse the approach of my wholesale order agent (P3): it turns emailed PDF and Excel purchase orders into Shopify draft orders and checks every price and total in code. For your invoices the same checks apply (line totals must add up, the vendor must exist) before anything reaches QuickBooks, and anything uncertain goes to your bookkeeper's review list. First step: a handful of sample invoices so I can show you the extracted fields side by side.",
+   "portfolio_used": [
+    "P3"
+   ],
+   "answers": [
+    "Not in a delivered project yet. My order agent (P3) posts to the Shopify Admin API the same way, and QuickBooks Online's API for bills follows a similar pattern."
+   ]
+  }
+ },
+ "jobs": [
+  {
+   "file": "job01_lead_agent.txt",
+   "decision": "bid",
+   "reason": "",
+   "rate": 108
+  },
+  {
+   "file": "job02_shopify_chatbot.txt",
+   "decision": "skip",
+   "reason": "pays up to $40/h",
+   "rate": null
+  },
+  {
+   "file": "job03_news_digest.txt",
+   "decision": "maybe",
+   "reason": "",
+   "rate": 90
+  },
+  {
+   "file": "job04_policy_rag.txt",
+   "decision": "bid",
+   "reason": "",
+   "rate": 108
+  },
+  {
+   "file": "job05_telegram.txt",
+   "decision": "skip",
+   "reason": "off Upwork",
+   "rate": null
+  },
+  {
+   "file": "job06_unverified.txt",
+   "decision": "skip",
+   "reason": "payment method not verified",
+   "rate": null
+  },
+  {
+   "file": "job07_finetune.txt",
+   "decision": "skip",
+   "reason": "50+ proposals",
+   "rate": null
+  },
+  {
+   "file": "job08_invoice_pdf.txt",
+   "decision": "bid",
+   "reason": "",
+   "rate": 90
+  }
+ ]
+}

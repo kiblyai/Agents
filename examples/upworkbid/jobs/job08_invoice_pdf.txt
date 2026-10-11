@@ -1,0 +1,30 @@
+Automate invoice extraction from PDFs into QuickBooks
+
+Posted 3 hours ago
+Worldwide
+
+Our bookkeeper types about 300 supplier invoices a month into QuickBooks Online. We want a tool to extract vendor, date, line items and totals from PDF invoices and create bills in QuickBooks Online, with a review step for anything it isn't sure about.
+
+$2,000.00
+Fixed-price
+
+Intermediate
+Experience Level
+
+Skills and Expertise: Python, PDF, OCR, QuickBooks
+
+You will be asked to answer the following questions when submitting a proposal:
+1. Have you worked with the QuickBooks Online API?
+
+Activity on this job
+Proposals: 15 to 20
+Send a proposal for: 14 Connects
+
+About the client
+Payment method verified
+4.7 of 5 reviews
+United States
+10 jobs posted
+60% hire rate, 1 open job
+$8K total spent
+Member since Jan 20, 2021

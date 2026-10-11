@@ -1,0 +1,37 @@
+Build an AI agent to qualify inbound leads and update HubSpot
+
+Posted 3 hours ago
+Worldwide
+
+We get about 200 inbound demo requests a month through a HubSpot form. We want an AI agent that researches each company, scores it against our ideal customer profile, writes a short summary and updates the HubSpot record, so our two sales reps only call the best leads.
+
+Deliverables:
+- Agent that runs on each new form submission
+- Company research from the website
+- Score and summary in custom HubSpot properties
+- Short handover doc
+
+$3,000.00
+Fixed-price
+
+Intermediate
+Experience Level
+
+Skills and Expertise: Python, LangChain, HubSpot, OpenAI API
+
+You will be asked to answer the following questions when submitting a proposal:
+1. Which CRM have you connected an AI agent to before?
+
+Activity on this job
+Proposals: 10 to 15
+Interviewing: 1
+Send a proposal for: 16 Connects
+
+About the client
+Payment method verified
+4.9 of 5 reviews
+United States
+18 jobs posted
+80% hire rate, 2 open jobs
+$45K total spent
+Member since Mar 15, 2019

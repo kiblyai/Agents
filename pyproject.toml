@@ -1,7 +1,7 @@
 [project]
 name = "leadagent"
 version = "0.1.0"
-description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron), freight quotes (freightq), cold-email outreach (outreach), Shopify wholesale POs (shopifypo), grant prospecting (grants), real-estate deadlines (txcoord), HubSpot cleanup (crmclean) and federal bids (govbids)."
+description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron), freight quotes (freightq), cold-email outreach (outreach), Shopify wholesale POs (shopifypo), grant prospecting (grants), real-estate deadlines (txcoord), HubSpot cleanup (crmclean), federal bids (govbids) and Upwork bids (upworkbid)."
 requires-python = ">=3.11"
 dependencies = [
     "openai>=1.40",
@@ -28,13 +28,14 @@ grants = "grants.__main__:main"
 txcoord = "txcoord.__main__:main"
 crmclean = "crmclean.__main__:main"
 govbids = "govbids.__main__:main"
+upworkbid = "upworkbid.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "outreach", "shopifypo", "grants", "txcoord", "crmclean", "govbids"]
+packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "outreach", "shopifypo", "grants", "txcoord", "crmclean", "govbids", "upworkbid"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

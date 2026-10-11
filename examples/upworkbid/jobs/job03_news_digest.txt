@@ -1,0 +1,26 @@
+Python script to summarize industry news every morning
+
+Posted 3 hours ago
+Worldwide
+
+I run a small consultancy and want a Python script to summarize the top stories in our industry every morning from a list of news sites and RSS feeds, and email me the digest.
+
+$800.00
+Fixed-price
+
+Intermediate
+Experience Level
+
+Skills and Expertise: Python, Web Scraping, OpenAI API
+
+Activity on this job
+Proposals: 5 to 10
+Send a proposal for: 8 Connects
+
+About the client
+Payment method verified
+No reviews yet
+United States
+1 job posted
+0% hire rate, 1 open job
+Member since Sep 28, 2026

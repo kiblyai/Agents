@@ -1,0 +1,33 @@
+RAG assistant over our HR policy PDFs
+
+Posted 3 hours ago
+Worldwide
+
+We want an internal assistant that can answer employee questions from our 300 policy PDFs, always showing which policy the answer came from. It must say when it doesn't know. Hosting on AWS.
+
+$80.00 - $120.00
+Hourly
+More than 30 hrs/week
+1 to 3 months
+
+Intermediate
+Experience Level
+
+Skills and Expertise: Python, RAG, LangChain, AWS
+
+You will be asked to answer the following questions when submitting a proposal:
+1. How do you stop the assistant from making things up?
+2. Which vector database would you use and why?
+
+Activity on this job
+Proposals: 5 to 10
+Send a proposal for: 12 Connects
+
+About the client
+Payment method verified
+4.8 of 5 reviews
+United States
+25 jobs posted
+70% hire rate, 1 open job
+$120K total spent
+Member since Jun 2, 2018
