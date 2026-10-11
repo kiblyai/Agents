@@ -1,0 +1,11 @@
+# A fictional small contractor for the govbids example.
+[company]
+name = "Cobalt Ridge Systems LLC"
+naics = ["541512", "541519", "541330"]
+certifications = ["SB", "SDVOSB"]
+capabilities = ["IT help desk and end user support", "ServiceNow administration", "network modernization", "zero trust architecture", "cybersecurity operations", "cloud migration"]
+past_performance = ["Tier 1-2 help desk for a 1,800-user federal agency office (2021-2025)", "ServiceNow ITSM rollout for a state transportation agency (2023)"]
+places = ["VA", "MD", "DC"]
+clearance = "secret"
+min_days = 7
+exclude_words = ["construction"]

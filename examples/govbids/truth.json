@@ -1,0 +1,336 @@
+{
+ "note": "Answer key for the synthetic govbids example made by `python -m govbids sample`. Fictional agency and companies. Run with --today 2026-10-12.",
+ "today": "2026-10-12",
+ "notices": [
+  {
+   "id": "ELC-HD-2026-014",
+   "status": "bid",
+   "filtered_reason": ""
+  },
+  {
+   "id": "EXA-ZT-0931",
+   "status": "bid",
+   "filtered_reason": ""
+  },
+  {
+   "id": "EXA-CN-2207",
+   "status": "filtered out",
+   "filtered_reason": "NAICS"
+  },
+  {
+   "id": "EXA-CY-4410",
+   "status": "filtered out",
+   "filtered_reason": "set aside"
+  },
+  {
+   "id": "EXA-CL-7714",
+   "status": "filtered out",
+   "filtered_reason": "days away"
+  },
+  {
+   "id": "EXA-AW-1123",
+   "status": "filtered out",
+   "filtered_reason": "notice type"
+  },
+  {
+   "id": "EXA-SS-0555",
+   "status": "respond",
+   "filtered_reason": ""
+  },
+  {
+   "id": "EXA-JN-3301",
+   "status": "filtered out",
+   "filtered_reason": "NAICS"
+  },
+  {
+   "id": "EXA-GS-6108",
+   "status": "filtered out",
+   "filtered_reason": "work is in CO"
+  },
+  {
+   "id": "EXA-EN-8802",
+   "status": "pass",
+   "filtered_reason": ""
+  },
+  {
+   "id": "EXA-HD-9920",
+   "status": "pass",
+   "filtered_reason": ""
+  },
+  {
+   "id": "EXA-RD-4471",
+   "status": "filtered out",
+   "filtered_reason": "set aside"
+  }
+ ],
+ "scores": {
+  "ELC-HD-2026-014": {
+   "fit": 92,
+   "decision": "bid",
+   "why": "Help desk and ServiceNow work for 2,400 users is exactly our core business, and the SDVOSB set-aside fits.",
+   "matches": [
+    {
+     "capability": "IT help desk and end user support",
+     "quote": "Tier 1 and Tier 2 help desk support for about 2,400 users"
+    },
+    {
+     "capability": "ServiceNow administration",
+     "quote": "ServiceNow administration"
+    }
+   ],
+   "risks": [
+    {
+     "risk": "on-site staff",
+     "quote": "Staff work on site in Alexandria, Virginia"
+    }
+   ],
+   "questions": [
+    "Is there an incumbent, and when does the current contract end?"
+   ]
+  },
+  "EXA-ZT-0931": {
+   "fit": 80,
+   "decision": "bid",
+   "why": "Zero trust and network modernization are core capabilities.",
+   "matches": [
+    {
+     "capability": "zero trust architecture",
+     "quote": "design and rollout of a zero trust architecture"
+    },
+    {
+     "capability": "network modernization",
+     "quote": "network modernization for a federal agency"
+    }
+   ],
+   "risks": [
+    {
+     "risk": "needs federal network modernization past performance",
+     "quote": "Prior experience with network modernization for a federal agency is required."
+    }
+   ],
+   "questions": []
+  },
+  "EXA-SS-0555": {
+   "fit": 85,
+   "decision": "respond",
+   "why": "A sources sought for ServiceNow administration: worth answering to shape the solicitation.",
+   "matches": [
+    {
+     "capability": "ServiceNow administration",
+     "quote": "firms that administer ServiceNow for federal customers"
+    }
+   ],
+   "risks": [],
+   "questions": [
+    "Which ServiceNow modules are in scope?"
+   ]
+  },
+  "EXA-EN-8802": {
+   "fit": 25,
+   "decision": "pass",
+   "why": "Mechanical and electrical shipboard engineering, not IT.",
+   "matches": [],
+   "risks": [
+    {
+     "risk": "not our field",
+     "quote": "Mechanical and electrical engineering support for shipboard HVAC and power systems"
+    }
+   ],
+   "questions": []
+  },
+  "EXA-HD-9920": {
+   "fit": 60,
+   "decision": "pass",
+   "why": "Help desk work we do, but the TS/SCI requirement is above our clearance.",
+   "matches": [
+    {
+     "capability": "IT help desk",
+     "quote": "Tier 1 help desk support for classified networks"
+    }
+   ],
+   "risks": [
+    {
+     "risk": "TS/SCI clearance above ours",
+     "quote": "All staff must hold an active TS/SCI clearance."
+    }
+   ],
+   "questions": []
+  }
+ },
+ "requirements": [
+  {
+   "phrase": "Tier 1 and Tier 2 help desk",
+   "type": "technical",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "help desk shall operate",
+   "type": "technical",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "priority 1 tickets",
+   "type": "technical",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "PMP certification",
+   "type": "staffing",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "monthly status report",
+   "type": "reporting",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "hold a Secret clearance",
+   "type": "security",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "complete phase-in",
+   "type": "schedule",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "Government will provide office space",
+   "type": "government",
+   "volume": "",
+   "offeror": false
+  },
+  {
+   "phrase": "Questions must be submitted",
+   "type": "instruction",
+   "volume": "",
+   "offeror": true
+  },
+  {
+   "phrase": "electronic proposal portal",
+   "type": "instruction",
+   "volume": "",
+   "offeror": true
+  },
+  {
+   "phrase": "Email submissions will not be accepted",
+   "type": "instruction",
+   "volume": "",
+   "offeror": true
+  },
+  {
+   "phrase": "Technical shall not exceed 20 pages",
+   "type": "format",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "Past Performance shall not exceed 10 pages",
+   "type": "format",
+   "volume": "Volume II - Past Performance",
+   "offeror": true
+  },
+  {
+   "phrase": "Pages shall be 8.5 x 11",
+   "type": "format",
+   "volume": "",
+   "offeror": true
+  },
+  {
+   "phrase": "ticket triage",
+   "type": "technical",
+   "volume": "Volume I - Technical",
+   "offeror": true
+  },
+  {
+   "phrase": "three past performance references",
+   "type": "past performance",
+   "volume": "Volume II - Past Performance",
+   "offeror": true
+  },
+  {
+   "phrase": "fully burdened labor rates",
+   "type": "pricing",
+   "volume": "Volume III - Price",
+   "offeror": true
+  },
+  {
+   "phrase": "best value tradeoff",
+   "type": "evaluation",
+   "volume": "",
+   "offeror": false
+  },
+  {
+   "phrase": "evaluate the offeror's staffing plan",
+   "type": "evaluation",
+   "volume": "Volume I - Technical",
+   "offeror": false
+  },
+  {
+   "phrase": "exceed the page limits will not be evaluated",
+   "type": "evaluation",
+   "volume": "",
+   "offeror": false
+  }
+ ],
+ "facts": {
+  "due": {
+   "date": "2026-11-06",
+   "time": "2:00 PM Eastern Time",
+   "quote": "Proposals are due no later than November 6, 2026 at 2:00 PM Eastern Time."
+  },
+  "questions_due": {
+   "date": "2026-10-23",
+   "quote": "Questions must be submitted by email to the Contracting Officer no later than October 23, 2026."
+  },
+  "submission": {
+   "value": "the agency's electronic proposal portal; email is not accepted",
+   "quote": "Offerors shall submit proposals through the agency's electronic proposal portal."
+  },
+  "page_limits": [
+   {
+    "volume": "Volume I - Technical",
+    "pages": 20,
+    "quote": "Volume I - Technical shall not exceed 20 pages."
+   },
+   {
+    "volume": "Volume II - Past Performance",
+    "pages": 10,
+    "quote": "Volume II - Past Performance shall not exceed 10 pages."
+   }
+  ],
+  "format": {
+   "value": "8.5 x 11 pages, 1-inch margins, 12-point Times New Roman",
+   "quote": "Pages shall be 8.5 x 11 inches with 1-inch margins and 12-point Times New Roman font."
+  },
+  "evaluation": {
+   "value": "best value tradeoff",
+   "quote": "Award will be made on a best value tradeoff basis."
+  },
+  "contract_type": {
+   "value": "Firm-fixed-price",
+   "quote": "Contract type: Firm-fixed-price."
+  },
+  "period_of_performance": {
+   "value": "one base year and four option years",
+   "quote": "Period of performance: one base year and four option years."
+  }
+ },
+ "fact_rows": [
+  "Proposal due",
+  "Questions due",
+  "Submission",
+  "Format",
+  "Evaluation",
+  "Contract type",
+  "Period of performance",
+  "Page limit: Volume I - Technical",
+  "Page limit: Volume II - Past Performance"
+ ]
+}
