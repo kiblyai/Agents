@@ -1,0 +1,171 @@
+{
+ "note": "Answer key for the synthetic campaign made by `python -m outreach sample`. Fictional companies.",
+ "leads": [
+  {
+   "email": "maya.chen@harlowpike.example",
+   "name": "Maya Chen",
+   "write": true,
+   "held": "",
+   "signal": "Hiring an IT support specialist (careers page, posted September 2026)"
+  },
+  {
+   "email": "derek.osei@ridgeline-eng.example",
+   "name": "Derek Osei",
+   "write": true,
+   "held": "",
+   "signal": "Opened a second office in Bloomington in August 2026"
+  },
+  {
+   "email": "priya@castlerockdental.example",
+   "name": "Priya Natarajan",
+   "write": true,
+   "held": "",
+   "signal": ""
+  },
+  {
+   "email": "tom@beckerlaw.example",
+   "name": "Tom Becker",
+   "write": false,
+   "held": "outside the meeting bar",
+   "signal": "Added a second attorney in July 2026"
+  },
+  {
+   "email": "alicia.romero@summitridgefa.example",
+   "name": "Alicia Romero",
+   "write": true,
+   "held": "",
+   "signal": "Announced a merger with Pine Street Wealth in September 2026"
+  },
+  {
+   "email": "grace.liu@northstar-arch.example",
+   "name": "Grace Liu",
+   "write": false,
+   "held": "outside the meeting bar",
+   "signal": "Won a design award for the Riverside Library in 2026"
+  },
+  {
+   "email": "jordan.ellis@",
+   "name": "Jordan Ellis",
+   "write": false,
+   "held": "no valid email",
+   "signal": ""
+  },
+  {
+   "email": "kevin.tran@tranpt.example",
+   "name": "Kevin Tran",
+   "write": true,
+   "held": "",
+   "signal": "Opened a third clinic in Normal in June 2026"
+  },
+  {
+   "email": "marcus.hale@lakeside-logistics.example",
+   "name": "Marcus Hale",
+   "write": true,
+   "held": "",
+   "signal": "Posted a job for a network administrator in September 2026"
+  },
+  {
+   "email": "ben.carter@westfielddental.example",
+   "name": "Ben Carter",
+   "write": true,
+   "held": "",
+   "signal": "Acquired two practices in Bloomington in 2026"
+  },
+  {
+   "email": "sofia@marininsurance.example",
+   "name": "Sofia Marin",
+   "write": true,
+   "held": "",
+   "signal": "Moved into a new office on Elm Street in July 2026"
+  }
+ ],
+ "replies": [
+  {
+   "file": "01_maya_interested.eml",
+   "category": "interested",
+   "follow_up": "",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "",
+   "draft": true,
+   "needs_client": false
+  },
+  {
+   "file": "02_derek_question.txt",
+   "category": "question",
+   "follow_up": "",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "",
+   "draft": true,
+   "needs_client": true
+  },
+  {
+   "file": "03_alicia_later.eml",
+   "category": "not_now",
+   "follow_up": "2027-01-01",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "",
+   "draft": true,
+   "needs_client": false
+  },
+  {
+   "file": "04_priya_remove.txt",
+   "category": "unsubscribe",
+   "follow_up": "",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "priya@castlerockdental.example",
+   "draft": false,
+   "needs_client": false
+  },
+  {
+   "file": "05_bounce_kevin.eml",
+   "category": "bounce",
+   "follow_up": "",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "kevin.tran@tranpt.example",
+   "draft": false,
+   "needs_client": false
+  },
+  {
+   "file": "06_marcus_away.eml",
+   "category": "out_of_office",
+   "follow_up": "2026-10-19",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "",
+   "draft": false,
+   "needs_client": false
+  },
+  {
+   "file": "07_ben_referral.eml",
+   "category": "referral",
+   "follow_up": "",
+   "referral_email": "hannah.brooks@westfielddental.example",
+   "referral_name": "Hannah Brooks",
+   "suppress": "",
+   "draft": true,
+   "needs_client": false
+  },
+  {
+   "file": "08_sofia_happy.txt",
+   "category": "objection",
+   "follow_up": "",
+   "referral_email": "",
+   "referral_name": "",
+   "suppress": "",
+   "draft": true,
+   "needs_client": false
+  }
+ ],
+ "invoice": {
+  "billable": [
+   "maya.chen@harlowpike.example",
+   "hannah.brooks@westfielddental.example"
+  ],
+  "total": 1000.0
+ }
+}

@@ -1,7 +1,7 @@
 [project]
 name = "leadagent"
 version = "0.1.0"
-description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron) and freight quotes (freightq)."
+description = "AI agents: lead research (leadagent, also as an Apify Actor: leadactor), security-questionnaire drafting (secq), medical chronologies (medchron), freight quotes (freightq) and cold-email outreach (outreach)."
 requires-python = ">=3.11"
 dependencies = [
     "openai>=1.40",
@@ -22,13 +22,14 @@ secq = "secq.__main__:main"
 medchron = "medchron.__main__:main"
 leadactor = "leadactor.__main__:main"
 freightq = "freightq.__main__:main"
+outreach = "outreach.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq"]
+packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "outreach"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

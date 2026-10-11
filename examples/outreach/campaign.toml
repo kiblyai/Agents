@@ -1,0 +1,30 @@
+# Campaign settings for one client of the meetings service (fictional example).
+[client]
+name = "Brightline IT"
+website = "brightline-it.example"
+sending_domains = ["brightline-it.example", "trybrightline.example"]
+sender_name = "Sam Ortiz"
+sender_title = "Partner"
+postal_address = "400 Market St, Suite 210, Springfield, IL 62701"
+booking_link = "https://cal.example/brightline/intro"
+offer = "Managed IT and cybersecurity for professional-services firms with 20-200 staff: help desk, Microsoft 365, backups and security training, for a flat monthly fee per user."
+proof = [
+  "Cut help-desk tickets by 38% in six months for a 60-person accounting firm",
+  "Average first response time of 12 minutes during business hours",
+  "Helped 14 clients pass cyber-insurance security questionnaires in 2025",
+]
+cta = "Worth a 20-minute call next week?"
+
+[sequence]
+days = [0, 3, 8]
+max_words = [110, 60, 50]
+
+[bar]
+titles = ["owner", "partner", "ceo", "coo", "cfo", "president", "office manager", "operations", "it manager", "practice manager"]
+min_employees = 20
+max_employees = 200
+countries = ["US"]
+
+[billing]
+platform_fee = 500
+per_meeting = 250
