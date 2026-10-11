@@ -19,7 +19,7 @@ AI agents for the service businesses ranked in [`analysis/`](analysis/): the uni
 
 All of them share `agentkit/`, which holds the model client (OpenRouter by default, with rate limiting, retries, backup models and JSON repair), per-agent settings, a cached request runner, document readers, search, table writers and the shared checks (quotes, numbers, dates), plus `.env` loading and a small PDF writer for the synthetic examples.
 
-Every agent except leadagent, leadactor and secq has a synthetic example with an answer key: run it, then `python -m <agent> score` shows how close the run came. Each README's "Try it on the example" section has the commands.
+Every agent except leadagent, leadactor and secq has a synthetic example with an answer key: run it, then `python -m <agent> score` shows how close the run came. Each README's "Try it on the example" section has the commands. To run the examples of the seven newest agents (outreach to upworkbid) and their scores in one go, run `sh examples/run_examples.sh`. That takes about 39 model requests, and the output is saved to `out/examples.log`.
 
 ## Setup (once)
 
