@@ -1,0 +1,147 @@
+{
+ "note": "Answer key for the synthetic grants example made by `python -m grants sample`. Fictional organizations. Run with --today 2026-10-12.",
+ "today": "2026-10-12",
+ "funders": [
+  {
+   "funder": "Riverbend Community Foundation",
+   "ruled_out": "",
+   "status": "strong",
+   "reply": {
+    "fit": 88,
+    "best_program": "Summer Reading Bridge",
+    "why": "A local funder whose stated priorities are early literacy and summer learning in Millbrook County.",
+    "priorities_matched": [
+     {
+      "point": "early literacy and summer learning",
+      "quote": "with a priority on early literacy and summer learning"
+     }
+    ],
+    "concerns": [],
+    "requirements": [
+     {
+      "point": "501(c)(3) serving Millbrook County",
+      "quote": "We fund nonprofit organizations with 501(c)(3) status serving Millbrook County residents."
+     },
+     {
+      "point": "letter of inquiry under 500 words",
+      "quote": "Begin with a letter of inquiry of no more than 500 words."
+     }
+    ],
+    "suggested_ask": 25000,
+    "application": "letter of inquiry",
+    "deadline": "2026-11-15"
+   }
+  },
+  {
+   "funder": "Great Lakes Literacy Fund",
+   "ruled_out": "",
+   "status": "strong",
+   "reply": {
+    "fit": 85,
+    "best_program": "Reading Buddies",
+    "why": "Funds K-3 tutoring that gets children reading on grade level by third grade, which is Reading Buddies.",
+    "priorities_matched": [
+     {
+      "point": "one-to-one tutoring in K-3",
+      "quote": "We prioritize one-to-one and small-group tutoring in kindergarten through grade 3"
+     }
+    ],
+    "concerns": [
+     {
+      "point": "no capital projects",
+      "quote": "we do not fund capital projects"
+     }
+    ],
+    "requirements": [
+     {
+      "point": "three years in operation",
+      "quote": "Organizations must have operated for at least three years."
+     }
+    ],
+    "suggested_ask": 40000,
+    "application": "letter of inquiry",
+    "deadline": "rolling"
+   }
+  },
+  {
+   "funder": "Harmon Family Foundation",
+   "ruled_out": "invitation only",
+   "status": "ruled out",
+   "reply": null
+  },
+  {
+   "funder": "Pacific Coast Youth Trust",
+   "ruled_out": "outside its geography",
+   "status": "ruled out",
+   "reply": null
+  },
+  {
+   "funder": "Ohio Arts Access Fund",
+   "ruled_out": "",
+   "status": "weak",
+   "reply": {
+    "fit": 20,
+    "best_program": "",
+    "why": "Funds arts programs led by teaching artists, not reading programs.",
+    "priorities_matched": [],
+    "concerns": [
+     {
+      "point": "needs a public performance",
+      "quote": "Programs must include a public performance or exhibition."
+     }
+    ],
+    "requirements": [],
+    "suggested_ask": null,
+    "application": "letter of inquiry",
+    "deadline": "2026-12-01"
+   }
+  },
+  {
+   "funder": "Midwest Capital Projects Fund",
+   "ruled_out": "grants start at",
+   "status": "ruled out",
+   "reply": null
+  },
+  {
+   "funder": "Millbrook Rotary Charitable Fund",
+   "ruled_out": "has passed",
+   "status": "ruled out",
+   "reply": null
+  },
+  {
+   "funder": "Buckeye Kids Reading Initiative",
+   "ruled_out": "",
+   "status": "strong",
+   "reply": {
+    "fit": 90,
+    "best_program": "Summer Reading Bridge",
+    "why": "A summer reading funder for Ohio children in grades K-5 that values free books and reading assessments.",
+    "priorities_matched": [
+     {
+      "point": "summer reading for grades K-5",
+      "quote": "We fund summer and out-of-school reading programs for Ohio children in grades K-5."
+     },
+     {
+      "point": "free books and reading levels",
+      "quote": "provide free books, and measure reading levels at the start and end of summer"
+     }
+    ],
+    "concerns": [],
+    "requirements": [
+     {
+      "point": "at least five weeks",
+      "quote": "Programs must run for at least five weeks."
+     }
+    ],
+    "suggested_ask": 30000,
+    "application": "full proposal",
+    "deadline": "2026-10-20"
+   }
+  }
+ ],
+ "draft": {
+  "funder": "Riverbend Community Foundation",
+  "amount": 25000,
+  "sections": 5
+ }
+}

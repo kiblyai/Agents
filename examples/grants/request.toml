@@ -1,0 +1,16 @@
+# What to draft: one letter of inquiry (fictional example).
+[request]
+funder = "Riverbend Community Foundation"
+program = "Summer Reading Bridge"
+amount = 25000
+type = "Letter of inquiry"
+word_limit = 500
+signer = "Ana Torres, Executive Director"
+salutation = "Dear Ms. Gomez,"
+sections = [
+  {name = "Introduction and request", words = 80, hint = "who we are and the amount we ask for"},
+  {name = "The need", words = 100, hint = "reading proficiency and summer learning loss in Millbrook County"},
+  {name = "The program", words = 120, hint = "what Summer Reading Bridge does, for whom, where and when"},
+  {name = "Outcomes and evaluation", words = 100, hint = "results so far and how we measure them"},
+  {name = "Organization and budget", words = 80, hint = "our track record and how the grant will be used"},
+]

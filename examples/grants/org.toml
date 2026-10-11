@@ -1,0 +1,28 @@
+# A fictional nonprofit for the grants example.
+[org]
+name = "Riverbend Youth Literacy Project"
+mission = "Helps children in Millbrook County read at grade level by third grade, through tutoring, summer learning and family literacy events."
+city = "Millbrook"
+state = "OH"
+service_area = ["Millbrook County"]
+annual_budget = 640000
+founded = 2012
+ask_min = 10000
+ask_max = 50000
+focus = ["early literacy", "reading", "summer learning", "family literacy", "education"]
+populations = ["children in grades 1 to 4", "low-income families"]
+
+[[program]]
+name = "Reading Buddies"
+summary = "One-to-one tutoring for first to third graders reading below grade level"
+budget = 210000
+
+[[program]]
+name = "Summer Reading Bridge"
+summary = "A six-week summer reading program at 4 library sites"
+budget = 95000
+
+[[program]]
+name = "Family Literacy Nights"
+summary = "Evening family reading events with take-home books"
+budget = 40000
