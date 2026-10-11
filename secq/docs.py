@@ -3,11 +3,11 @@
 from __future__ import annotations
 
 import csv
-import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
-TEXT_TYPES = {".md", ".txt", ".markdown"}
+from agentkit.docs import TEXT_TYPES, chunk, read_docx, read_pdf, read_text_file
+
 SHEET_TYPES = {".xlsx", ".xlsm", ".csv"}
 
 
@@ -34,78 +34,6 @@ class KnowledgeBase:
     library: list[LibraryAnswer] = field(default_factory=list)
     files_read: list[str] = field(default_factory=list)
     files_skipped: list[str] = field(default_factory=list)
-
-
-def chunk(text: str, max_words: int = 180) -> list[str]:
-    """Split text into passages of up to max_words, keeping paragraphs together where possible."""
-    paras = [re.sub(r"\s+", " ", p).strip() for p in re.split(r"\n\s*\n|\n(?=[-*•] )", text)]
-    out, cur, n = [], [], 0
-    for p in filter(None, paras):
-        words = p.split()
-        while len(words) > max_words:  # one very long paragraph
-            if cur:
-                out.append(" ".join(cur))
-                cur, n = [], 0
-            out.append(" ".join(words[:max_words]))
-            words = words[max_words:]
-        if n + len(words) > max_words and cur:
-            out.append(" ".join(cur))
-            cur, n = [], 0
-        cur.append(" ".join(words))
-        n += len(words)
-    if cur:
-        out.append(" ".join(cur))
-    return out
-
-
-def _sections_markdown(text: str) -> list[tuple[str, str]]:
-    sections, heading, buf = [], "", []
-    for line in text.splitlines():
-        m = re.match(r"^\s{0,3}#{1,6}\s+(.*)", line)
-        if m:
-            if buf:
-                sections.append((heading, "\n".join(buf)))
-            heading, buf = m.group(1).strip(), []
-        else:
-            buf.append(line)
-    if buf:
-        sections.append((heading, "\n".join(buf)))
-    return sections
-
-
-def read_text_file(path: Path) -> list[tuple[str, str]]:
-    return [(f"{path.name}" + (f" § {h}" if h else ""), body)
-            for h, body in _sections_markdown(path.read_text(encoding="utf-8", errors="replace"))]
-
-
-def read_pdf(path: Path) -> list[tuple[str, str]]:
-    from pypdf import PdfReader
-
-    reader = PdfReader(str(path))
-    return [(f"{path.name} p.{i}", page.extract_text() or "") for i, page in enumerate(reader.pages, 1)]
-
-
-def read_docx(path: Path) -> list[tuple[str, str]]:
-    import docx
-
-    d = docx.Document(str(path))
-    sections, heading, buf = [], "", []
-    for para in d.paragraphs:
-        style = (para.style.name if para.style is not None else "") or ""
-        if style.lower().startswith("heading") and para.text.strip():
-            if buf:
-                sections.append((f"{path.name}" + (f" § {heading}" if heading else ""), "\n\n".join(buf)))
-            heading, buf = para.text.strip(), []
-        elif para.text.strip():
-            buf.append(para.text.strip())
-    if buf:
-        sections.append((f"{path.name}" + (f" § {heading}" if heading else ""), "\n\n".join(buf)))
-    for n, table in enumerate(d.tables, 1):
-        rows = [" | ".join(c.text.strip() for c in row.cells if c.text.strip()) for row in table.rows]
-        text = "\n\n".join(r for r in rows if r)
-        if text:
-            sections.append((f"{path.name} table {n}", text))
-    return sections
 
 
 def read_library(path: Path, start_id: int) -> list[LibraryAnswer]:

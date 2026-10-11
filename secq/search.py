@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import math
 import re
-from collections import Counter
+
+from agentkit.search import BM25 as _BM25
 
 # Different words for the same control, folded into one token so questions and policies meet.
 SYNONYMS: list[tuple[str, str]] = [
@@ -40,35 +40,8 @@ def tokens(text: str) -> list[str]:
     return [w for w in re.findall(r"[a-z0-9]+", normalize(text)) if w not in STOP and (len(w) > 1 or w.isdigit())]
 
 
-class BM25:
+class BM25(_BM25):
+    """agentkit's BM25 with the security synonyms above."""
+
     def __init__(self, docs: list[str], k1: float = 1.5, b: float = 0.75):
-        self.k1, self.b = k1, b
-        self.docs = [Counter(tokens(d)) for d in docs]
-        self.lengths = [sum(d.values()) for d in self.docs]
-        self.avg = (sum(self.lengths) / len(self.lengths)) if self.docs else 0.0
-        df: Counter = Counter()
-        for d in self.docs:
-            df.update(d.keys())
-        n = len(self.docs)
-        self.idf = {t: math.log(1 + (n - f + 0.5) / (f + 0.5)) for t, f in df.items()}
-
-    def scores(self, query: str) -> list[float]:
-        q = tokens(query)
-        out = []
-        for d, length in zip(self.docs, self.lengths):
-            s = 0.0
-            for t in q:
-                f = d.get(t)
-                if f:
-                    s += self.idf[t] * f * (self.k1 + 1) / (f + self.k1 * (1 - self.b + self.b * length / (self.avg or 1)))
-            out.append(s)
-        return out
-
-    def top(self, query: str, k: int, min_score: float = 0.0, context: str = "", context_weight: float = 0.25
-            ) -> list[tuple[int, float]]:
-        """Best k documents for the query. `context` (e.g. the section title) only nudges the ranking."""
-        scores = self.scores(query)
-        if context:
-            scores = [s + context_weight * c for s, c in zip(scores, self.scores(context))]
-        ranked = sorted(enumerate(scores), key=lambda x: -x[1])
-        return [(i, s) for i, s in ranked[:k] if s > min_score]
+        super().__init__(docs, tokenize=tokens, k1=k1, b=b)
