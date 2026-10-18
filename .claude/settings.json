@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m harness:*)",
+      "Bash(.venv/bin/python -m harness:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(.venv/bin/python -m pytest:*)"
+    ],
+    "deny": [
+      "Read(./.env)"
+    ]
+  }
+}

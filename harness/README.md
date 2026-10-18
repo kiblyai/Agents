@@ -48,3 +48,13 @@ A full run takes about 22 model requests (secq 2, medchron about 9, freightq 11)
 leadagent and leadactor aren't included: they need live websites and have no answer key.
 
 Outputs go to `out/harness/<model>/<agent>/`, with each agent's usual files plus `run.log`. The history is `out/harness/history.jsonl`. Both are git-ignored.
+
+## From Claude Code
+
+In Claude Code, opened in `~/Agents`, type:
+
+```
+/eval
+```
+
+Claude runs the harness, explains the table and works out why anything failed: a model mistake that code should catch, a code bug, or a wrong answer key. Add `--fix` (`/eval --fix`) to have it also write a regression test and the fix, then run the tests. Any other arguments go to `harness run`, e.g. `/eval --agents freightq --model google/gemma-4-31b-it:free`. It never commits or pushes unless you ask, and it never changes an answer key without asking you. The skill is `.claude/skills/eval/SKILL.md`. `.claude/settings.json` lets it run the harness and the tests without asking each time, and stops Claude from reading `.env`.
