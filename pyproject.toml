@@ -22,13 +22,14 @@ secq = "secq.__main__:main"
 medchron = "medchron.__main__:main"
 leadactor = "leadactor.__main__:main"
 freightq = "freightq.__main__:main"
+harness = "harness.__main__:main"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq"]
+packages = ["agentkit", "leadagent", "leadactor", "secq", "medchron", "freightq", "harness"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

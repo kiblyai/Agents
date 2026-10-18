@@ -1,0 +1,15 @@
+{
+  "note": "Answer key for examples/secq/sample_questionnaire.xlsx, written by hand from examples/secq/kb. Fictional company. Each covered question lists the facts a right answer states (any one spelling per group) and the files it may cite; uncovered questions must be flagged for review and never answered Yes.",
+  "questions": [
+    {"qid": "1.1", "covered": true, "yes": true, "facts": [["AES-256", "AES 256"]], "sources": ["security-overview.md"]},
+    {"qid": "1.2", "covered": true, "facts": [["TLS 1.2", "TLS1.2", "TLS v1.2"]], "sources": ["security-overview.md"]},
+    {"qid": "1.3", "covered": true, "facts": [["35 days", "35-day", "thirty-five days"]], "sources": ["data-retention.md"]},
+    {"qid": "2.1", "covered": true, "yes": true, "facts": [], "sources": ["security-overview.md"]},
+    {"qid": "2.2", "covered": true, "yes": true, "facts": [], "sources": ["security-overview.md"]},
+    {"qid": "3.1", "covered": true, "facts": [["72 hours", "72-hour", "72 hrs", "seventy-two hours"]], "sources": ["incident-response.md"]},
+    {"qid": "3.2", "covered": true, "yes": true, "facts": [["24/7", "24x7", "24 x 7"]], "sources": ["incident-response.md"]},
+    {"qid": "4.1", "covered": true, "yes": true, "facts": [["SOC 2", "SOC2"]], "sources": ["security-overview.md", "past_questionnaire.csv"]},
+    {"qid": "4.2", "covered": false},
+    {"qid": "4.3", "covered": false}
+  ]
+}
